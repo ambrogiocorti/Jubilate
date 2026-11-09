@@ -1,0 +1,57 @@
+import { createContext, useCallback, useContext, useMemo, useRef, useState, type ReactNode } from 'react';
+import { Icon } from '../components/ui/Icon';
+
+type Tone = 'success' | 'danger' | 'info';
+interface Toast { id: number; tone: Tone; message: string; action?: { label: string; onClick: () => void } }
+
+interface ToastApi {
+  show: (message: string, tone?: Tone, action?: Toast['action']) => void;
+  success: (message: string) => void;
+  error: (message: string) => void;
+}
+
+const ToastContext = createContext<ToastApi | null>(null);
+
+export function ToastProvider({ children }: { children: ReactNode }) {
+  const [toasts, setToasts] = useState<Toast[]>([]);
+  const seq = useRef(0);
+
+  const dismiss = useCallback((id: number) => setToasts((t) => t.filter((x) => x.id !== id)), []);
+  const show = useCallback<ToastApi['show']>(
+    (message, tone = 'info', action) => {
+      const id = ++seq.current;
+      setToasts((t) => [...t.slice(-2), { id, tone, message, action }]);
+      window.setTimeout(() => dismiss(id), tone === 'danger' ? 7000 : 4000);
+    },
+    [dismiss],
+  );
+  const api = useMemo<ToastApi>(
+    () => ({ show, success: (m) => show(m, 'success'), error: (m) => show(m, 'danger') }),
+    [show],
+  );
+
+  return (
+    <ToastContext.Provider value={api}>
+      {children}
+      <div className="toasts" aria-live="polite" aria-atomic="false">
+        {toasts.map((t) => (
+          <div key={t.id} className={`toast toast--${t.tone}`} role={t.tone === 'danger' ? 'alert' : 'status'}>
+            <Icon name={t.tone === 'success' ? 'checkCircle' : t.tone === 'danger' ? 'alert' : 'info'} />
+            <span>{t.message}</span>
+            {t.action && (
+              <button className="toast__action" onClick={() => { t.action!.onClick(); dismiss(t.id); }}>
+                {t.action.label}
+              </button>
+            )}
+          </div>
+        ))}
+      </div>
+    </ToastContext.Provider>
+  );
+}
+
+export function useToast(): ToastApi {
+  const ctx = useContext(ToastContext);
+  if (!ctx) throw new Error('useToast outside ToastProvider');
+  return ctx;
+}
