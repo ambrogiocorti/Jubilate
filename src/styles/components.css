@@ -296,9 +296,12 @@ a.tab { display: inline-flex; align-items: center; text-decoration: none; }
 
 
 /* ---------- Score finder (CPDL) ---------- */
-.score-finder__list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2); }
-.score-finder__item {
-  display: flex; align-items: center; gap: var(--space-3);
-  padding: var(--space-3); border: 1px solid var(--border); border-radius: var(--radius);
+.score-finder__steps { margin: 0; padding-left: 1.25rem; display: grid; gap: var(--space-1); color: var(--text-muted); }
+.score-finder__search { display: flex; gap: var(--space-2); flex-wrap: wrap; align-items: center; }
+.score-finder__search .search { flex: 1 1 240px; }
+.score-finder__search .btn.is-disabled { opacity: 0.5; pointer-events: none; }
+.score-finder__drop {
+  display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;
+  padding: var(--space-3); border: 1px dashed var(--border-strong); border-radius: var(--radius);
 }
-.score-finder__page { font-weight: var(--weight-medium); overflow-wrap: anywhere; }
+.score-finder__drop.is-dragging { border-color: var(--accent); background: var(--accent-soft); }

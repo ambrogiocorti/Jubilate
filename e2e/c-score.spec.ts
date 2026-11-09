@@ -10,7 +10,7 @@ test('C — importa un MusicXML, modifica una nota, salva, esporta e reimporta',
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
 
   // 1. Import
-  await page.locator('input[type=file]').setInputFiles('e2e/fixtures/esercizio.musicxml');
+  await page.locator('input[type=file]').first().setInputFiles('e2e/fixtures/esercizio.musicxml');
   await expect(page.getByRole('heading', { level: 1, name: 'Esercizio' })).toBeVisible();
   // 2. Display (Verovio SVG)
   const notes = page.locator('.score-canvas g.note');
@@ -43,7 +43,7 @@ test('C — importa un MusicXML, modifica una nota, salva, esporta e reimporta',
   expect(exported).toContain('<words>Lento</words>'); // unsupported content preserved
   // 7. Re-import the exported file: the change survives
   await page.goto(`./spartiti/nuovo?canto=${songId}`);
-  await page.locator('input[type=file]').setInputFiles({ name: 'esportato.musicxml', mimeType: 'application/xml', buffer: Buffer.from(exported) });
+  await page.locator('input[type=file]').first().setInputFiles({ name: 'esportato.musicxml', mimeType: 'application/xml', buffer: Buffer.from(exported) });
   await expect(page.locator('.score-canvas g.note')).toHaveCount(5, { timeout: 60_000 });
   await page.locator('.score-canvas g.note').nth(1).click({ force: true });
   await expect(page.getByText(/Battuta 1: Mi♯4/)).toBeVisible();

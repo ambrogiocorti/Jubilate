@@ -22,7 +22,7 @@ import { Alert, EmptyState, Spinner } from '../../components/ui/Feedback';
 import { SongPicker } from '../../components/ui/SongPicker';
 import { ScoreViewer } from './ScoreViewer';
 import { ScoreFinder } from './ScoreFinder';
-import { candidateSource, type ScoreCandidate } from '../../data/scoreSearch';
+import { candidateSource, type ScoreSource } from '../../data/scoreSearch';
 
 const TYPE_LABEL: Record<NoteType, string> = { whole: 'Semibreve', half: 'Minima', quarter: 'Semiminima', eighth: 'Croma', '16th': 'Semicroma', '32nd': 'Biscroma' };
 const STEP_IT: Record<Step, string> = { C: 'Do', D: 'Re', E: 'Mi', F: 'Fa', G: 'Sol', A: 'La', B: 'Si' };
@@ -282,7 +282,7 @@ function Studio({ initialScore, initialXml, canWrite, songIdParam }: StudioProps
     }
   };
   const [pendingMeta, setPendingMeta] = useState<SaveMeta | null>(null);
-  const [importedFrom, setImportedFrom] = useState<ScoreCandidate | null>(null);
+  const [importedFrom, setImportedFrom] = useState<ScoreSource | null>(null);
 
   const openHistory = async () => {
     if (!score) return;
@@ -320,7 +320,7 @@ function Studio({ initialScore, initialXml, canWrite, songIdParam }: StudioProps
           setHistory((h) => push(h, serializeMusicXml(parseMusicXml(text))));
           setSelected(null);
           setImportedFrom(c);
-          toast.success('Spartito importato da CPDL. Controllalo prima di salvare.');
+          toast.success('Spartito caricato. Controllalo prima di salvare.');
         }} />
       )}
 

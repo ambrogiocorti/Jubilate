@@ -32,7 +32,7 @@ function contentSecurityPolicy(supabaseUrl: string): string {
     `img-src 'self' data: blob: ${sb} https://i.ytimg.com`,
     `media-src 'self' blob: ${sb}`,
     "font-src 'self' data:",
-    `connect-src 'self' ${sb} ${ws} https://www.cpdl.org https://cdn.jsdelivr.net https://tessdata.projectnaptha.com`,
+    `connect-src 'self' ${sb} ${ws} https://cdn.jsdelivr.net https://tessdata.projectnaptha.com`,
     'frame-src https://www.youtube-nocookie.com',
     "object-src 'none'",
     "base-uri 'self'",
@@ -127,7 +127,7 @@ export default defineConfig(({ mode }) => {
     environment: 'jsdom',
     globals: true,
     setupFiles: ['./src/test/setup.ts'],
-    include: ['src/**/*.test.{ts,tsx}', 'supabase/functions/_shared/**/*.test.ts'],
+    include: ['src/**/*.test.{ts,tsx}'],
   },
   };
 });

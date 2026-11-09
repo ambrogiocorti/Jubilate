@@ -6,9 +6,9 @@ Tutti i risultati qui riportati sono stati ottenuti eseguendo davvero i comandi 
 
 | Livello | Comando | Risultato |
 |---|---|---|
-| Unitari (Vitest) | `npm test` | 136 test in 12 file superati |
+| Unitari (Vitest) | `npm test` | 131 test in 11 file superati |
 | Sicurezza del database | `npm run test:db` | 74 controlli superati |
-| End-to-end nel browser (Playwright, Chromium, profilo Pixel 7) | `npm run test:e2e` | 19 test superati: scenari A–J, posizione dei messaggi (L), importazione da CPDL diretta e tramite servizio (M, M2) e controlli di accessibilità |
+| End-to-end nel browser (Playwright, Chromium, profilo Pixel 7) | `npm run test:e2e` | 18 test superati: scenari A–J, posizione dei messaggi (L), spartito da CPDL (M) e controlli di accessibilità |
 | Tipi | `npm run typecheck` | Nessun errore |
 | Build di produzione | `npm run build` | Riuscita |
 
@@ -50,9 +50,9 @@ Eseguiti contro lo stack Supabase completo avviato in Docker (`npx supabase star
 - Al primo accesso l'app non funzionava offline senza un ricaricamento (ora il service worker prende il controllo subito).
 - Link nel testo distinguibili solo per colore.
 
-## Ricerca su CPDL
+## Spartiti da CPDL
 
-`supabase/functions/_shared/cpdl.test.ts` verifica la ricerca (risultati ordinati, preferenza per .mxl, file oltre 5 MB scartati, solo URL di CPDL) con risposte simulate. Lo scenario M verifica nel browser l'importazione con un tocco e la fonte precompilata, simulando la funzione. La funzione pubblicata contro il vero CPDL non è stata provata da questo ambiente, che non raggiunge cpdl.org.
+CPDL è protetto da una verifica Cloudflare («Just a moment…», HTTP 403) che blocca ogni richiesta automatica, sia da un server (verificato nei log della Edge Function) sia dal browser. Per questo l'app apre la ricerca su CPDL e l'utente carica il file scaricato; lo scenario M verifica il collegamento, il caricamento e la fonte precompilata.
 
 ## Non ancora verificato
 

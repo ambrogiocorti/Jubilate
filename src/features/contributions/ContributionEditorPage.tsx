@@ -259,7 +259,7 @@ function ContributionForm({ loaded, arrangementId }: { loaded: Loaded; arrangeme
           {editable && song && (
             <ScoreFinder title={song.title} onImported={(text, c) => {
               setMusicxml(text);
-              if (!scoreName) setScoreName(c.page);
+              if (!scoreName) setScoreName(scoreTitle(parseMusicXml(text)));
               setMessage((m) => (m.trim() ? m : candidateSource(c)));
             }} />
           )}
