@@ -2,7 +2,8 @@
  * Score search on CPDL (Choral Public Domain Library, https://www.cpdl.org),
  * a MediaWiki site with free choral scores, many with a MusicXML edition.
  *
- * Pure helpers shared by the `score-search` Edge Function and the unit tests:
+ * Pure helpers shared by the app (which queries CPDL directly from the
+ * browser), the `score-search` Edge Function (fallback proxy) and the tests:
  * no Deno or browser APIs here, the HTTP client is injected.
  */
 
@@ -24,7 +25,8 @@ export interface ScoreCandidate {
 export type FetchJson = (url: string) => Promise<unknown>;
 
 export function apiUrl(params: Record<string, string>): string {
-  const q = new URLSearchParams({ format: 'json', formatversion: '2', ...params });
+  // origin=* enables anonymous CORS, so the same URLs work from the browser.
+  const q = new URLSearchParams({ format: 'json', formatversion: '2', origin: '*', ...params });
   return `${CPDL_API}?${q.toString()}`;
 }
 

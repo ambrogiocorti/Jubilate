@@ -9,7 +9,8 @@
 import { createClient } from 'npm:@supabase/supabase-js@2';
 import { findScores, isAllowedFileUrl, MAX_SCORE_BYTES } from '../_shared/cpdl.ts';
 
-const USER_AGENT = 'Jubilate parish songbook (score search)';
+// MediaWiki asks API clients for a descriptive User-Agent with a contact URL.
+const USER_AGENT = 'Jubilate/1.0 (https://ambrogiocorti.github.io/Jubilate/; parish songbook score search)';
 const cors = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
@@ -22,15 +23,24 @@ function json(body: unknown, status = 200): Response {
 
 async function fetchJson(url: string): Promise<unknown> {
   const r = await fetch(url, { headers: { 'User-Agent': USER_AGENT, Accept: 'application/json' }, signal: AbortSignal.timeout(10_000) });
-  if (!r.ok) throw new Error(`cpdl_${r.status}`);
+  if (!r.ok) {
+    const snippet = (await r.text().catch(() => '')).replace(/\s+/g, ' ').slice(0, 200);
+    throw new Error(`cpdl_http_${r.status} server=${r.headers.get('server') ?? ''} body=${snippet}`);
+  }
+  const type = r.headers.get('content-type') ?? '';
+  if (!type.includes('json')) throw new Error(`cpdl_not_json_${type}`);
   return r.json();
 }
 
 async function signedIn(req: Request): Promise<boolean> {
   const token = req.headers.get('Authorization')?.replace(/^Bearer\s+/i, '');
   if (!token) return false;
-  const supabase = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_ANON_KEY')!);
+  // Use the API key the app itself sent (publishable key), falling back to the
+  // legacy anon key: works whether or not legacy keys are enabled.
+  const apiKey = req.headers.get('apikey') || Deno.env.get('SUPABASE_ANON_KEY') || '';
+  const supabase = createClient(Deno.env.get('SUPABASE_URL')!, apiKey, { auth: { persistSession: false } });
   const { data, error } = await supabase.auth.getUser(token);
+  if (error) console.error('score-search auth', error.message);
   return !error && Boolean(data.user);
 }
 
@@ -57,7 +67,7 @@ Deno.serve(async (req) => {
     }
     return json({ error: 'invalid_request' }, 400);
   } catch (e) {
-    console.error('score-search', e);
-    return json({ error: 'source_unavailable' }, 502);
+    console.error('score-search', e instanceof Error ? e.message : e);
+    return json({ error: 'source_unavailable', detail: e instanceof Error ? e.message.slice(0, 120) : undefined }, 502);
   }
 });

@@ -23,7 +23,7 @@ Solo e-mail e password: l'accesso con Google è stato rimosso su richiesta. In S
 
 ## 2b. Funzione di ricerca degli spartiti (CPDL)
 
-`supabase/functions/score-search` cerca file MusicXML su CPDL e li scarica per l'app (CPDL non permette il download diretto dal browser). Pubblicazione: `npx supabase functions deploy score-search --project-ref <ref> --use-api` (oppure dalla Management API). Non usa segreti; controlla da sé che l'utente abbia effettuato l'accesso (`verify_jwt = false` in `config.toml`, perché le chiavi pubblicabili non sono JWT). Accetta solo file `.mxl/.musicxml/.xml` di `www.cpdl.org` fino a 5 MB. Rientra nel piano gratuito (500.000 chiamate al mese).
+L'app interroga CPDL direttamente dal browser (l'API MediaWiki accetta `origin=*`); CPDL rifiuta con 403 le richieste che arrivano dai server delle Edge Functions. `supabase/functions/score-search` resta come riserva per la ricerca e per scaricare i file quando il browser non può farlo. Pubblicazione: `npx supabase functions deploy score-search --project-ref <ref> --use-api` (oppure dalla Management API). Non usa segreti; controlla da sé che l'utente abbia effettuato l'accesso (`verify_jwt = false` in `config.toml`, perché le chiavi pubblicabili non sono JWT). Accetta solo file `.mxl/.musicxml/.xml` di `www.cpdl.org` fino a 5 MB. Rientra nel piano gratuito (500.000 chiamate al mese).
 
 ## 3. GitHub Pages
 

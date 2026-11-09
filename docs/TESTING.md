@@ -8,7 +8,7 @@ Tutti i risultati qui riportati sono stati ottenuti eseguendo davvero i comandi 
 |---|---|---|
 | Unitari (Vitest) | `npm test` | 136 test in 12 file superati |
 | Sicurezza del database | `npm run test:db` | 74 controlli superati |
-| End-to-end nel browser (Playwright, Chromium, profilo Pixel 7) | `npm run test:e2e` | 18 test superati: scenari A–J, posizione dei messaggi (L), importazione da CPDL (M) e controlli di accessibilità |
+| End-to-end nel browser (Playwright, Chromium, profilo Pixel 7) | `npm run test:e2e` | 19 test superati: scenari A–J, posizione dei messaggi (L), importazione da CPDL diretta e tramite servizio (M, M2) e controlli di accessibilità |
 | Tipi | `npm run typecheck` | Nessun errore |
 | Build di produzione | `npm run build` | Riuscita |
 
