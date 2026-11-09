@@ -20,10 +20,20 @@ function looksLikeSecret(k: string): boolean {
   return false;
 }
 
+/** Path the app is served under: '/' or e.g. '/Jubilate/' on GitHub Pages. */
+export const basePath = import.meta.env.BASE_URL;
+
+/** Absolute URL of a public file (icons etc.), honouring the base path. */
+export function publicAsset(file: string): string {
+  return `${basePath}${file.replace(/^\//, '')}`;
+}
+
 export const env = {
   supabaseUrl: url,
   supabaseKey: looksLikeSecret(key) ? '' : key,
   secretKeyRejected: looksLikeSecret(key),
-  siteUrl: ((import.meta.env.VITE_SITE_URL as string | undefined) || window.location.origin).replace(/\/$/, ''),
+  // Public origin + base path, without trailing slash; used for auth redirects
+  // and share links.
+  siteUrl: ((import.meta.env.VITE_SITE_URL as string | undefined) || window.location.origin + basePath).replace(/\/$/, ''),
   isConfigured: Boolean(url && key && !looksLikeSecret(key)),
 };

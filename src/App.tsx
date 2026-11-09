@@ -10,7 +10,7 @@ import { RequireAuth, RequireRole } from './app/guards';
 import { ConfigMissing } from './app/ConfigMissing';
 import { UpdatePrompt } from './app/UpdatePrompt';
 import { OutboxSync } from './app/OutboxSync';
-import { env } from './lib/env';
+import { basePath, env } from './lib/env';
 import { LibraryPage } from './features/library/LibraryPage';
 import { SongPage } from './features/song/SongPage';
 import { NotFound } from './app/NotFound';
@@ -46,7 +46,7 @@ const AdminRoutes = lazy(() => import('./features/admin/AdminRoutes'));
 export function App() {
   if (!env.isConfigured) return <ConfigMissing />;
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={basePath.replace(/\/$/, '') || '/'}>
       <ToastProvider>
         <AuthProvider>
           <PrefsProvider>

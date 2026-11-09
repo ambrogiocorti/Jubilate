@@ -1,4 +1,4 @@
-import { env } from '../lib/env';
+import { env, publicAsset } from '../lib/env';
 
 /** Shown when the build has no Supabase configuration (developer setup issue). */
 export function ConfigMissing() {
@@ -6,7 +6,7 @@ export function ConfigMissing() {
     <main className="auth-page">
       <div className="auth-card">
         <div className="auth-card__head">
-          <img src="/favicon.svg" alt="" />
+          <img src={publicAsset('favicon.svg')} alt="" />
           <h1>Configurazione mancante</h1>
           <p className="muted">
             {env.secretKeyRejected

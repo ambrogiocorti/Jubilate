@@ -1,3 +1,4 @@
+import { publicAsset } from '../../lib/env';
 import { Suspense, type ReactNode } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '../../app/AuthProvider';
@@ -57,7 +58,7 @@ function NavGroup({ label, items }: { label?: string; items: NavItem[] }) {
 export function Brand({ sub = false }: { sub?: boolean }) {
   return (
     <Link to="/" className="brand" aria-label="Jubilate, vai alla biblioteca">
-      <img src="/favicon.svg" alt="" width={30} height={30} />
+      <img src={publicAsset('favicon.svg')} alt="" width={30} height={30} />
       <span>
         Jubilate
         {sub && <span className="brand__sub">La musica che unisce la comunità</span>}

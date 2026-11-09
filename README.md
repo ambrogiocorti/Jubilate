@@ -9,7 +9,7 @@ Jubilate è una Progressive Web App per i canti della parrocchia: testi, accordi
 - **Direttori**: stanze con codice di 6 cifre, scalette, prove.
 - **Amministratori**: catalogo, revisioni, proposte, utenti e ruoli, categorie, spartiti, registrazioni, impostazioni.
 
-Tecnologie: React 19, TypeScript, Vite, Supabase (Postgres con RLS, Auth, Realtime, Storage), Workbox, IndexedDB, Verovio (spartiti), pdf.js e Tesseract (importazione), Cloudflare Pages.
+Tecnologie: React 19, TypeScript, Vite, Supabase (Postgres con RLS, Auth, Realtime, Storage), Workbox, IndexedDB, Verovio (spartiti), pdf.js e Tesseract (importazione), GitHub Pages.
 
 ## Avvio rapido (sviluppo locale)
 

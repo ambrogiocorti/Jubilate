@@ -2,7 +2,7 @@
 
 ## Da completare prima della pubblicazione
 
-1. Progetto Supabase dedicato, credenziali Google OAuth e progetto Cloudflare Pages (vedi DEPLOYMENT.md).
+1. URL di accesso in Supabase, credenziali Google OAuth e attivazione di GitHub Pages (vedi DEPLOYMENT.md). Il progetto Supabase dedicato esiste ed ha le migrazioni applicate.
 2. Verifica nell'ambiente reale: email di conferma, accesso con Google, Storage, Realtime attraverso Internet.
 3. Prove manuali su iPhone/Safari e Firefox; audit di accessibilità con lettori di schermo (VoiceOver, TalkBack, NVDA).
 4. Caricamento dei canti del libretto da parte degli amministratori, con fonte e diritti.

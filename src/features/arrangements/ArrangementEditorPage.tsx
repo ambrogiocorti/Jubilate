@@ -1,3 +1,4 @@
+import { env } from '../../lib/env';
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useToast } from '../../app/ToastProvider';
@@ -173,7 +174,7 @@ function Editor({ initial }: { initial: Arrangement }) {
               const token = await setArrangementSharing(initial.id, !shareToken);
               setShareToken(token);
               if (token) {
-                const url = `${window.location.origin}/condivisi/versione/${token}`;
+                const url = `${env.siteUrl}/condivisi/versione/${token}`;
                 await navigator.clipboard?.writeText(url).catch(() => undefined);
                 toast.success('Collegamento di condivisione copiato. È visibile solo agli utenti registrati che lo ricevono.');
               } else toast.success('Condivisione disattivata.');
@@ -183,7 +184,7 @@ function Editor({ initial }: { initial: Arrangement }) {
           <ButtonLink to={`/spartiti/nuovo?canto=${initial.song_id}&versione=${initial.id}`} icon="music">Spartito personale</ButtonLink>
           <Button variant="danger-soft" icon="trash" onClick={() => setConfirmDelete(true)}>Elimina</Button>
         </div>
-        {shareToken && <p className="small muted">Collegamento attivo: <code style={{ wordBreak: 'break-all' }}>{`${window.location.origin}/condivisi/versione/${shareToken}`}</code></p>}
+        {shareToken && <p className="small muted">Collegamento attivo: <code style={{ wordBreak: 'break-all' }}>{`${env.siteUrl}/condivisi/versione/${shareToken}`}</code></p>}
       </section>
 
       <Dialog open={historyOpen} onClose={() => setHistoryOpen(false)} title="Storico delle versioni" wide>

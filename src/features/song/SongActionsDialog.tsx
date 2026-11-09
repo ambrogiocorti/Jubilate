@@ -1,3 +1,4 @@
+import { env } from '../../lib/env';
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../app/AuthProvider';
@@ -48,7 +49,7 @@ export function SongActionsDialog({ open, onClose, detail, arrangement, pinned, 
   };
 
   const share = async () => {
-    const url = `${window.location.origin}/canti/${song.id}`;
+    const url = `${env.siteUrl}/canti/${song.id}`;
     try {
       if (navigator.share) await navigator.share({ title: song.title, url });
       else {

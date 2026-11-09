@@ -35,7 +35,9 @@ Un utente sospeso perde le funzioni riservate (resta come visitatore). Un partec
 - I video YouTube sono solo incorporati (dominio `youtube-nocookie.com`), mai scaricati. Gli URL accettati sono validati sia nel client sia da un vincolo `CHECK`.
 - I file MusicXML sono analizzati con `DOMParser` dopo aver rimosso il `DOCTYPE` (nessuna DTD esterna, nessuna espansione di entità), limite 5 MB.
 
-## Intestazioni HTTP (Cloudflare Pages, `public/_headers`)
+## Intestazioni HTTP
+
+Su GitHub Pages non si possono impostare intestazioni di risposta: la Content-Security-Policy è inserita dal build come `<meta http-equiv>` in `index.html` (`vite.config.ts`). In questa forma `frame-ancestors`, HSTS (comunque applicato da github.io), `Permissions-Policy`, `COOP` e `X-Frame-Options` non sono disponibili. Su Cloudflare Pages `public/_headers` aggiunge tutte le intestazioni:
 
 Content-Security-Policy restrittiva (`default-src 'self'`; script solo propri più l'hash dello script del tema; `wasm-unsafe-eval` per Verovio; connessioni solo verso Supabase e le risorse di Tesseract), `frame-ancestors 'none'`, HSTS, `nosniff`, `Referrer-Policy`, `Permissions-Policy`, `COOP`.
 

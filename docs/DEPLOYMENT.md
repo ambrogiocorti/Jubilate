@@ -5,9 +5,9 @@ Jubilate non è ancora pubblicata. Questa è la procedura prevista; i passi cont
 ## 1. Progetto Supabase dedicato 🔑
 
 1. Creare un progetto **nuovo e dedicato a Jubilate** (regione UE, ad esempio Francoforte; piano gratuito). Non riutilizzare database di altri progetti.
-2. Applicare le migrazioni: `npx supabase link --project-ref <ref>` e `npx supabase db push`. **Non** applicare `supabase/seed.sql` in produzione.
+2. Applicare le migrazioni: `npx supabase link --project-ref <ref>` e `npx supabase db push` (oppure, se la porta 5432 non è raggiungibile, con l'endpoint HTTPS `POST /v1/projects/<ref>/database/query` della Management API). **Non** applicare `supabase/seed.sql` in produzione.
 3. Controllare gli avvisi di sicurezza e prestazioni (Advisors) del progetto.
-4. Auth → URL Configuration: Site URL `https://<dominio>`; Redirect URLs `https://<dominio>/auth/callback` (più l'eventuale anteprima `https://*.jubilate.pages.dev/auth/callback`).
+4. Auth → URL Configuration: Site URL `https://ambrogiocorti.github.io/Jubilate`; Redirect URLs `https://ambrogiocorti.github.io/Jubilate/auth/callback` (con un dominio personalizzato, `https://<dominio>` e `https://<dominio>/auth/callback`).
 5. Auth → password: minimo 8 caratteri, lettere e numeri. Abilitare la conferma dell'email.
 6. Primo amministratore: dopo la registrazione, dall'editor SQL del progetto
    ```sql
@@ -20,15 +20,19 @@ Jubilate non è ancora pubblicata. Questa è la procedura prevista; i passi cont
 
 Google Cloud Console → credenziali OAuth «Applicazione web» con URI di reindirizzamento `https://<ref>.supabase.co/auth/v1/callback`. Inserire Client ID e Client Secret in Supabase → Auth → Providers → Google. Il segreto resta in Supabase: non va mai nel codice o nelle variabili del frontend.
 
-## 3. Cloudflare Pages 🔑
+## 3. GitHub Pages
 
-- Collegare il repository; comando di build `npm run build`; cartella di output `dist`; Node 22.
-- Variabili d'ambiente (solo valori pubblicabili):
+Indirizzo gratuito e senza scadenza: **https://ambrogiocorti.github.io/Jubilate/** (nessun dominio da acquistare o rinnovare).
+
+- Il workflow `.github/workflows/deploy-pages.yml` esegue typecheck, test unitari e build a ogni push su `main` (o a mano da Actions → «Deploy to GitHub Pages») e pubblica `dist`.
+- Una tantum: repository → Settings → Pages → Source: **GitHub Actions**. Il repository deve essere pubblico (Pages su repository privati richiede un piano a pagamento).
+- Variabili (Settings → Secrets and variables → Actions → Variables; solo valori pubblicabili, già impostati come predefiniti nel workflow):
   - `VITE_SUPABASE_URL` = `https://<ref>.supabase.co`
   - `VITE_SUPABASE_PUBLISHABLE_KEY` = chiave **pubblicabile** (`sb_publishable_…`). L'app rifiuta di avviarsi con una chiave segreta.
-  - `VITE_SITE_URL` = `https://<dominio>`
-- `public/_headers` imposta CSP e intestazioni di sicurezza; `public/_redirects` gestisce le rotte della SPA.
-- Se il progetto Supabase usa un dominio personalizzato, aggiungerlo a `connect-src` e `img-src` nella CSP.
+  - `CUSTOM_DOMAIN` (facoltativo) = dominio personalizzato; il workflow compila per la radice del sito e aggiunge il file `CNAME`.
+- L'app è compilata con `BASE_PATH=/Jubilate/` (percorso base di Vite, del router e del manifest PWA). Il build copia `index.html` in `404.html` per le rotte della SPA e aggiunge `.nojekyll`.
+- GitHub Pages non permette intestazioni HTTP personalizzate: la Content-Security-Policy è inserita come `<meta>` in `index.html` (vedi SECURITY.md). `public/_headers` e `public/_redirects` restano per un eventuale hosting su Cloudflare Pages.
+- Se il progetto Supabase usa un dominio personalizzato, aggiungerlo alla CSP in `vite.config.ts`.
 
 ## 4. Controlli prima della pubblicazione
 

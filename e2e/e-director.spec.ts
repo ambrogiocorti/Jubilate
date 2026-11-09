@@ -14,7 +14,7 @@ test('E — richiesta del ruolo di direttore, approvazione e creazione di una st
   await expect(admin.getByText('Ruolo di direttore assegnato.')).toBeVisible();
 
   // Roles are read from the database: a reload picks up the new role.
-  await candidate.goto('/stanze');
+  await candidate.goto('./stanze');
   await candidate.reload();
   await candidate.getByLabel('Titolo').fill('Messa delle 11 (prova)');
   await candidate.getByRole('button', { name: 'Crea stanza e genera il codice' }).click();

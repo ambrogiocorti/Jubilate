@@ -16,7 +16,7 @@ test('I — l’utente salva alcuni canti, va offline e continua a consultarli',
   await page.context().setOffline(true);
   // A full reload while offline: the app shell comes from the service worker,
   // the library and songs from IndexedDB.
-  await page.goto('/');
+  await page.goto('./');
   await expect(page.getByRole('heading', { name: 'Biblioteca dei canti' })).toBeVisible();
   await page.getByRole('searchbox').fill('resta con noi');
   await page.getByRole('link', { name: /Resta con noi, Signore/ }).click();

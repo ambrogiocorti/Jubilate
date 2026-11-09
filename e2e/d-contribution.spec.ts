@@ -30,6 +30,6 @@ test('D — un utente propone una correzione e l’amministratore la approva', a
   expect(Number(revAfter)).toBe(Number(revBefore) + 1);
   expect(sql(`select status from public.contribution_requests where title like 'Correzione del testo: Resta con noi%' order by created_at desc limit 1`)).toBe('approved');
   const visitor = await browser.newPage();
-  await visitor.goto(`/canti/${songId}`);
+  await visitor.goto(`./canti/${songId}`);
   await expect(visitor.getByText(marker)).toBeVisible();
 });

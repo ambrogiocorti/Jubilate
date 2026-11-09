@@ -1,6 +1,6 @@
 # Architettura
 
-Jubilate è una Progressive Web App a pagina singola (React 19 + TypeScript + Vite) servita come file statici da Cloudflare Pages, con Supabase come backend (Postgres, Auth, Realtime, Storage). Non c'è un server applicativo intermedio: **tutta l'autorizzazione è nel database** (Row Level Security e funzioni `SECURITY DEFINER`), l'interfaccia si limita a nascondere ciò che l'utente non può fare.
+Jubilate è una Progressive Web App a pagina singola (React 19 + TypeScript + Vite) servita come file statici da GitHub Pages, con Supabase come backend (Postgres, Auth, Realtime, Storage). Non c'è un server applicativo intermedio: **tutta l'autorizzazione è nel database** (Row Level Security e funzioni `SECURITY DEFINER`), l'interfaccia si limita a nascondere ciò che l'utente non può fare.
 
 ```
 Browser (PWA)                                 Supabase

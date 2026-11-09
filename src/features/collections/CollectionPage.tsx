@@ -1,3 +1,4 @@
+import { env } from '../../lib/env';
 import { useCallback, useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useToast } from '../../app/ToastProvider';
@@ -77,7 +78,7 @@ export default function CollectionPage() {
     }
   }, 'Canti della raccolta disponibili offline.');
 
-  const shareUrl = collection.share_token ? `${window.location.origin}/condivisi/raccolta/${collection.share_token}` : null;
+  const shareUrl = collection.share_token ? `${env.siteUrl}/condivisi/raccolta/${collection.share_token}` : null;
 
   return (
     <div className="container stack-lg">
@@ -147,7 +148,7 @@ export default function CollectionPage() {
           <Button icon="download" loading={busy} onClick={downloadAll} disabled={!items.length}>Scarica per l’uso offline</Button>
           <Button icon="link" onClick={() => act(async () => {
             const t = await setCollectionSharing(collection.id, !collection.share_token);
-            if (t) await navigator.clipboard?.writeText(`${window.location.origin}/condivisi/raccolta/${t}`).catch(() => undefined);
+            if (t) await navigator.clipboard?.writeText(`${env.siteUrl}/condivisi/raccolta/${t}`).catch(() => undefined);
           }, collection.share_token ? 'Condivisione disattivata.' : 'Collegamento copiato negli appunti.')}>
             {collection.share_token ? 'Disattiva collegamento' : 'Condividi con un collegamento'}
           </Button>

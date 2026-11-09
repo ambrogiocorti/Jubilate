@@ -1,0 +1,65 @@
+# Builds Jubilate and publishes it on GitHub Pages.
+#
+# Default address: https://<owner>.github.io/<repo>/ (free, no domain needed).
+# For a custom domain set the repository variable CUSTOM_DOMAIN (e.g.
+# jubilate.example.org): the app is then built for the site root and a CNAME
+# file is added. Only publishable values are used here; never add secret keys.
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL || 'https://odunxiuirkaodmbrayot.supabase.co' }}
+      VITE_SUPABASE_PUBLISHABLE_KEY: ${{ vars.VITE_SUPABASE_PUBLISHABLE_KEY || 'sb_publishable_neCsumXqxBYrBvbG7CyTbQ_am8KyD9A' }}
+      CUSTOM_DOMAIN: ${{ vars.CUSTOM_DOMAIN }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Base path and site URL
+        run: |
+          if [ -n "$CUSTOM_DOMAIN" ]; then
+            echo "BASE_PATH=/" >> "$GITHUB_ENV"
+            echo "VITE_SITE_URL=https://$CUSTOM_DOMAIN" >> "$GITHUB_ENV"
+          else
+            repo="${GITHUB_REPOSITORY#*/}"
+            echo "BASE_PATH=/$repo/" >> "$GITHUB_ENV"
+            echo "VITE_SITE_URL=https://${GITHUB_REPOSITORY_OWNER,,}.github.io/$repo" >> "$GITHUB_ENV"
+          fi
+      - run: npm run typecheck
+      - run: npm test
+      - run: npx vite build
+      - name: Custom domain
+        if: env.CUSTOM_DOMAIN != ''
+        run: echo "$CUSTOM_DOMAIN" > dist/CNAME
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
