@@ -21,6 +21,8 @@ import { Field } from '../../components/ui/Field';
 import { Alert, EmptyState, Spinner } from '../../components/ui/Feedback';
 import { SongPicker } from '../../components/ui/SongPicker';
 import { ScoreViewer } from './ScoreViewer';
+import { ScoreFinder } from './ScoreFinder';
+import { candidateSource, type ScoreCandidate } from '../../data/scoreSearch';
 
 const TYPE_LABEL: Record<NoteType, string> = { whole: 'Semibreve', half: 'Minima', quarter: 'Semiminima', eighth: 'Croma', '16th': 'Semicroma', '32nd': 'Biscroma' };
 const STEP_IT: Record<Step, string> = { C: 'Do', D: 'Re', E: 'Mi', F: 'Fa', G: 'Sol', A: 'La', B: 'Si' };
@@ -280,6 +282,7 @@ function Studio({ initialScore, initialXml, canWrite, songIdParam }: StudioProps
     }
   };
   const [pendingMeta, setPendingMeta] = useState<SaveMeta | null>(null);
+  const [importedFrom, setImportedFrom] = useState<ScoreCandidate | null>(null);
 
   const openHistory = async () => {
     if (!score) return;
@@ -311,6 +314,15 @@ function Studio({ initialScore, initialXml, canWrite, songIdParam }: StudioProps
           {!canWrite && score && <ButtonLink variant="primary" icon="copy" to={`/spartiti/nuovo?da=${score.id}${score.song_id ? `&canto=${score.song_id}` : ''}`}>Crea una copia personale</ButtonLink>}
         </div>
       </div>
+
+      {!score && canWrite && song && (
+        <ScoreFinder title={song.title} onImported={(text, c) => {
+          setHistory((h) => push(h, serializeMusicXml(parseMusicXml(text))));
+          setSelected(null);
+          setImportedFrom(c);
+          toast.success('Spartito importato da CPDL. Controllalo prima di salvare.');
+        }} />
+      )}
 
       {draftOffer && (
         <Alert tone="info" title="Modifiche non salvate trovate">
@@ -425,6 +437,8 @@ function Studio({ initialScore, initialXml, canWrite, songIdParam }: StudioProps
       )}
 
       <SaveDialog
+        defaultSource={importedFrom ? candidateSource(importedFrom) : undefined}
+        defaultRights={importedFrom ? 'licensed' : undefined}
         open={saveOpen}
         onClose={() => setSaveOpen(false)}
         busy={busy}
@@ -563,6 +577,7 @@ interface SaveMeta {
 function SaveDialog(props: {
   open: boolean; onClose: () => void; busy: boolean; isNew: boolean; isAdmin: boolean; score: MusicScore | null;
   defaultTitle: string; defaultSongId: string | null; issues: number; onSave: (m: SaveMeta) => void;
+  defaultSource?: string; defaultRights?: SaveMeta['rights'];
 }) {
   const { byId } = useLibrary();
   const [meta, setMeta] = useState<SaveMeta>({
@@ -572,11 +587,13 @@ function SaveDialog(props: {
     official: false,
     publish: false,
     note: '',
-    source: '',
-    rights: 'own_work',
+    source: props.defaultSource ?? '',
+    rights: props.defaultRights ?? 'own_work',
   });
   const [picker, setPicker] = useState(false);
-  useEffect(() => { if (props.open) setMeta((m) => ({ ...m, title: props.score?.title ?? props.defaultTitle })); }, [props.open, props.score, props.defaultTitle]);
+  useEffect(() => {
+    if (props.open) setMeta((m) => ({ ...m, title: props.score?.title ?? props.defaultTitle, source: m.source || (props.defaultSource ?? ''), rights: props.defaultSource && !m.source ? (props.defaultRights ?? m.rights) : m.rights }));
+  }, [props.open, props.score, props.defaultTitle, props.defaultSource, props.defaultRights]);
   const song = meta.songId ? byId.get(meta.songId) : undefined;
   const isOfficial = props.score ? props.score.owner_id === null : meta.official;
   return (

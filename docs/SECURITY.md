@@ -35,6 +35,10 @@ Un utente sospeso perde le funzioni riservate (resta come visitatore). Un partec
 - I video YouTube sono solo incorporati (dominio `youtube-nocookie.com`), mai scaricati. Gli URL accettati sono validati sia nel client sia da un vincolo `CHECK`.
 - I file MusicXML sono analizzati con `DOMParser` dopo aver rimosso il `DOCTYPE` (nessuna DTD esterna, nessuna espansione di entità), limite 5 MB.
 
+## Ricerca di spartiti esterni
+
+La funzione `score-search` è chiamabile solo da utenti con sessione valida, scarica soltanto file MusicXML ospitati su `www.cpdl.org` (niente URL arbitrari, quindi niente SSRF), con limite di 5 MB e tempi massimi. Lo spartito importato è solo un'anteprima: va salvato esplicitamente, e uno spartito ufficiale va pubblicato dall'amministratore dopo aver verificato la licenza indicata su CPDL.
+
 ## Intestazioni HTTP
 
 Su GitHub Pages non si possono impostare intestazioni di risposta: la Content-Security-Policy è inserita dal build come `<meta http-equiv>` in `index.html` (`vite.config.ts`). In questa forma `frame-ancestors`, HSTS (comunque applicato da github.io), `Permissions-Policy`, `COOP` e `X-Frame-Options` non sono disponibili. Su Cloudflare Pages `public/_headers` aggiunge tutte le intestazioni:

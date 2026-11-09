@@ -11,6 +11,8 @@ import { fetchSongRemote } from '../../data/library';
 import { fetchArrangement } from '../../data/personal';
 import { createMediaAsset, uploadMediaFile, validateUpload, youtubeId, audioDuration } from '../../data/media';
 import { readScoreFile, INSTRUMENT_LABEL, type Instrument } from '../../data/scores';
+import { candidateSource } from '../../data/scoreSearch';
+import { ScoreFinder } from '../score/ScoreFinder';
 import { diffContent } from '../../domain/diff';
 import { emptyContent, isValidContent, type SongContent } from '../../domain/song';
 import { importPlainText } from '../../domain/textImport';
@@ -254,6 +256,13 @@ function ContributionForm({ loaded, arrangementId }: { loaded: Loaded; arrangeme
       {kind === 'score' && (
         <section className="stack" aria-label="Spartito">
           <h2>Spartito</h2>
+          {editable && song && (
+            <ScoreFinder title={song.title} onImported={(text, c) => {
+              setMusicxml(text);
+              if (!scoreName) setScoreName(c.page);
+              setMessage((m) => (m.trim() ? m : candidateSource(c)));
+            }} />
+          )}
           {editable && (
             <div className="form-row">
               <Field label="File MusicXML" hint=".musicxml, .xml o .mxl, al massimo 5 MB. Esportalo da MuseScore, Sibelius, Finale o Dorico.">

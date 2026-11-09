@@ -21,6 +21,10 @@ Jubilate non è ancora pubblicata. Questa è la procedura prevista; i passi cont
 
 Solo e-mail e password: l'accesso con Google è stato rimosso su richiesta. In Supabase → Auth → Providers il provider Google deve restare disattivato.
 
+## 2b. Funzione di ricerca degli spartiti (CPDL)
+
+`supabase/functions/score-search` cerca file MusicXML su CPDL e li scarica per l'app (CPDL non permette il download diretto dal browser). Pubblicazione: `npx supabase functions deploy score-search --project-ref <ref> --use-api` (oppure dalla Management API). Non usa segreti; controlla da sé che l'utente abbia effettuato l'accesso (`verify_jwt = false` in `config.toml`, perché le chiavi pubblicabili non sono JWT). Accetta solo file `.mxl/.musicxml/.xml` di `www.cpdl.org` fino a 5 MB. Rientra nel piano gratuito (500.000 chiamate al mese).
+
 ## 3. GitHub Pages
 
 Indirizzo gratuito e senza scadenza: **https://ambrogiocorti.github.io/Jubilate/** (nessun dominio da acquistare o rinnovare).
