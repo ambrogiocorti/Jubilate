@@ -13,7 +13,7 @@ export function AuthLayout({ title, subtitle, children, footer }: { title: strin
           </div>
           {children}
         </div>
-        {footer && <div className="small muted" style={{ textAlign: 'center' }}>{footer}</div>}
+        {footer && <p className="small muted" style={{ textAlign: 'center' }}>{footer}</p>}
       </div>
     </main>
   );

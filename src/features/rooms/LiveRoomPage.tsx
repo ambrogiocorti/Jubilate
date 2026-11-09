@@ -36,7 +36,7 @@ export default function LiveRoomPage() {
       expired: ['La stanza è scaduta', 'Il tempo di validità della stanza è terminato.'],
       revoked: ['Non partecipi a questa stanza', 'La partecipazione non è valida o è stata revocata. Inserisci un nuovo codice per entrare.'],
       not_found: ['Stanza non trovata', 'Controlla il codice e riprova.'],
-    }[state.ended];
+    }[state.ended] as [string, string];
     return (
       <div className="main">
         <EmptyState

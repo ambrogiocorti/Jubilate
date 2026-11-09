@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useRegisterSW } from 'virtual:pwa-register/react';
 import { Button } from '../components/ui/Button';
 import { Icon } from '../components/ui/Icon';
@@ -17,6 +18,13 @@ export function UpdatePrompt() {
       if (reg) setInterval(() => void reg.update(), 60 * 60 * 1000);
     },
   });
+
+  // The "ready for offline" notice is informative only: hide it by itself.
+  useEffect(() => {
+    if (!offlineReady || needRefresh) return;
+    const t = window.setTimeout(() => setOfflineReady(false), 5000);
+    return () => window.clearTimeout(t);
+  }, [offlineReady, needRefresh, setOfflineReady]);
 
   if (!needRefresh && !offlineReady) return null;
   return (

@@ -145,12 +145,15 @@
 
 /* ---------- Toasts ---------- */
 .toasts {
+  pointer-events: none;
   position: fixed; z-index: 900;
   left: 50%; transform: translateX(-50%);
   bottom: calc(var(--bottomnav-h) + var(--space-4) + env(safe-area-inset-bottom));
   display: grid; gap: var(--space-2); width: min(92vw, 420px);
 }
 @media (min-width: 1024px) { .toasts { bottom: var(--space-6); } }
+.toasts[popover] { inset: auto; right: auto; top: auto; margin: 0; padding: 0; border: 0; background: transparent; overflow: visible; color: inherit; }
+.toasts[popover]:not(:popover-open) { display: grid; }
 .toast {
   display: flex; align-items: center; gap: var(--space-3);
   padding: var(--space-3) var(--space-4);
@@ -261,3 +264,5 @@ a.tab { display: inline-flex; align-items: center; text-decoration: none; }
 .status-dot--online { background: var(--success); }
 .status-dot--offline { background: var(--warning); }
 .status-dot--live { background: var(--danger); box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 25%, transparent); }
+
+.toast { pointer-events: auto; }

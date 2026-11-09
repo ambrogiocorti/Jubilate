@@ -148,7 +148,7 @@ stable
 set search_path = ''
 as $$
 declare
-  s jsonb; c jsonb; keys text[] := '{}'; k text; nlines int; line text;
+  s jsonb; c jsonb; keys text[] := '{}'::text[]; k text; nlines int; line text;
 begin
   if p is null or jsonb_typeof(p) <> 'object' then
     raise exception 'invalid_content: not an object' using errcode = '22023';

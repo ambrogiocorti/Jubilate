@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useMemo, useRef, useState, type ReactNode } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { Icon } from '../components/ui/Icon';
 
 type Tone = 'success' | 'danger' | 'info';
@@ -30,10 +30,21 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     [show],
   );
 
+  // Toasts live in the top layer (popover) so they stay visible above modal dialogs.
+  const layer = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = layer.current as (HTMLDivElement & { showPopover?: () => void; hidePopover?: () => void }) | null;
+    if (!el?.showPopover) return;
+    try {
+      if (el.matches(':popover-open')) el.hidePopover!();
+      if (toasts.length) el.showPopover();
+    } catch { /* unsupported: falls back to z-index */ }
+  }, [toasts]);
+
   return (
     <ToastContext.Provider value={api}>
       {children}
-      <div className="toasts" aria-live="polite" aria-atomic="false">
+      <div ref={layer} popover="manual" className="toasts" aria-live="polite" aria-atomic="false">
         {toasts.map((t) => (
           <div key={t.id} className={`toast toast--${t.tone}`} role={t.tone === 'danger' ? 'alert' : 'status'}>
             <Icon name={t.tone === 'success' ? 'checkCircle' : t.tone === 'danger' ? 'alert' : 'info'} />

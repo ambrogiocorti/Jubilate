@@ -34,6 +34,9 @@ export default defineConfig({
         globPatterns: ['**/*.{js,css,html,svg,png,woff2,webmanifest}'],
         globIgnores: ['**/verovio*'],
         navigateFallback: '/index.html',
+        // The first installed worker takes control at once, so the app works
+        // offline right after the first visit. Updates still wait for the user.
+        clientsClaim: true,
         navigateFallbackDenylist: [/^\/auth\/v1/, /^\/rest\/v1/],
         maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
         runtimeCaching: [

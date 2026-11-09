@@ -109,7 +109,8 @@
   font-size: var(--text-sm);
 }
 .room-banner__title { font-weight: var(--weight-semibold); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.room-banner__meta { opacity: 0.8; white-space: nowrap; }
+.room-banner__meta { opacity: 0.8; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.room-banner > .btn { flex: none; }
 .room-banner .btn { margin-left: auto; --btn-bg: var(--brand-contrast); --btn-fg: var(--brand); --btn-border: transparent; }
 .room-banner .btn:hover { background: var(--brand-contrast); opacity: 0.92; }
 .room-banner--attention .btn { animation: pulse 2s var(--ease) infinite; }

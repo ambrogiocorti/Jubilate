@@ -22,6 +22,8 @@ const MESSAGES: Record<string, string> = {
   contribution_not_reviewable: 'La proposta non è in uno stato valutabile.',
   conflict_outdated_base: 'La versione ufficiale è cambiata dopo questa proposta. Confronta le differenze prima di approvare.',
   reason_required: 'Indica una motivazione.',
+  media_not_found: 'La registrazione collegata non esiste più.',
+  missing_musicxml: 'La proposta non contiene uno spartito.',
   arrangement_not_accessible: 'Non hai accesso a questa versione personale.',
   song_not_found: 'Canto non disponibile.',
   no_setlist: 'Questa stanza non ha una scaletta.',

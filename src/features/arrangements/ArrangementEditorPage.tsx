@@ -52,7 +52,8 @@ function Editor({ initial }: { initial: Arrangement }) {
     return d && JSON.stringify(d.content) !== JSON.stringify(initial.content) ? d : null;
   });
   const song = byId.get(initial.song_id);
-  const metaDirty = meta.name !== initial.name || meta.display_key !== initial.display_key || meta.capo !== initial.capo;
+  const [savedMeta, setSavedMeta] = useState({ name: initial.name, display_key: initial.display_key, capo: initial.capo });
+  const metaDirty = meta.name !== savedMeta.name || meta.display_key !== savedMeta.display_key || meta.capo !== savedMeta.capo;
 
   const save = useCallback(async (asDraft = false) => {
     if (!isValidContent(editor.content)) return toast.error('Correggi gli errori prima di salvare.');
@@ -62,6 +63,7 @@ function Editor({ initial }: { initial: Arrangement }) {
     try {
       if (!navigator.onLine) {
         await queueArrangementSave(payload, version);
+        setSavedMeta({ name: payload.name, display_key: payload.display_key, capo: payload.capo });
         editor.markSaved(editor.content);
         toast.success('Sei offline: modifiche salvate sul dispositivo, verranno sincronizzate al ritorno della connessione.');
         return;
@@ -72,6 +74,7 @@ function Editor({ initial }: { initial: Arrangement }) {
         return;
       }
       setVersion(r.version);
+      setSavedMeta({ name: payload.name, display_key: payload.display_key, capo: payload.capo });
       editor.markSaved(editor.content);
       toast.success(asDraft ? 'Bozza salvata.' : 'Versione salvata.');
     } catch (err) {

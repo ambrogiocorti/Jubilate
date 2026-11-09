@@ -96,7 +96,7 @@ export function LibraryPage() {
         {categories.length > 0 && (
           <details className="stack-sm" open={Boolean(cat)}>
             <summary className="small muted" style={{ cursor: 'pointer', minHeight: 32, display: 'flex', alignItems: 'center' }}>
-              Filtra per categoria{cat && byId.get(cat) ? `: ${catName(byId.get(cat)!)}` : ''}
+              <span aria-hidden="true" style={{ marginRight: 6 }}>▸</span>Filtra per categoria{cat && byId.get(cat) ? `: ${catName(byId.get(cat)!)}` : ''}
             </summary>
             <div className="stack" style={{ paddingTop: 'var(--space-2)' }}>
               {GROUPS.map((g) => {

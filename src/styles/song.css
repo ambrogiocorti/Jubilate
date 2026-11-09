@@ -84,3 +84,13 @@
 :root[data-theme='dark'] .score-canvas { background: #f4f1ea; }
 .score-canvas g.note.is-selected, .score-canvas g.note.is-selected * { fill: var(--blue-600); stroke: var(--blue-600); }
 .score-canvas g.note { cursor: pointer; }
+
+/* Score studio: properties panel beside the score on wide screens */
+@media (min-width: 1180px) {
+  .score-studio { grid-template-columns: minmax(0, 1fr) 300px !important; align-items: start; }
+  .score-studio > aside { position: sticky; top: calc(var(--topbar-h) + var(--space-4)); }
+}
+.score-canvas > div + div { margin-top: var(--space-4); }
+.score-toolbar { min-width: 0; }
+.score-toolbar .segmented { flex-wrap: wrap; max-width: 100%; }
+.score-studio, .score-studio > * { min-width: 0; }
