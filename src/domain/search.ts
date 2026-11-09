@@ -18,7 +18,10 @@ export interface SearchableSong {
 }
 
 export interface SearchFilters {
+  /** Song must have at least one of these categories. */
   categoryIds?: string[];
+  /** Each group must match (AND); inside a group any category matches (OR). */
+  categoryGroups?: string[][];
   key?: string | null;
 }
 
@@ -49,6 +52,7 @@ export function searchSongs(index: Prepared[], query: string, filters: SearchFil
   for (const p of index) {
     const s = p.song;
     if (filters.categoryIds?.length && !filters.categoryIds.some((c) => s.category_ids.includes(c))) continue;
+    if (filters.categoryGroups?.some((g) => g.length > 0 && !g.some((c) => s.category_ids.includes(c)))) continue;
     if (filters.key && s.original_key !== filters.key) continue;
     if (!terms.length) {
       results.push({ song: s, score: 0 });

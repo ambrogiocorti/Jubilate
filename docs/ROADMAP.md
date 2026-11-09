@@ -2,8 +2,8 @@
 
 ## Da completare prima della pubblicazione
 
-1. URL di accesso in Supabase, credenziali Google OAuth e attivazione di GitHub Pages (vedi DEPLOYMENT.md). Il progetto Supabase dedicato esiste ed ha le migrazioni applicate.
-2. Verifica nell'ambiente reale: email di conferma, accesso con Google, Storage, Realtime attraverso Internet.
+1. Fatto: progetto Supabase dedicato con le migrazioni, URL di accesso, pubblicazione su GitHub Pages.
+2. Verifica nell'ambiente reale: email di conferma, Storage, Realtime attraverso Internet.
 3. Prove manuali su iPhone/Safari e Firefox; audit di accessibilità con lettori di schermo (VoiceOver, TalkBack, NVDA).
 4. Caricamento dei canti del libretto da parte degli amministratori, con fonte e diritti.
 

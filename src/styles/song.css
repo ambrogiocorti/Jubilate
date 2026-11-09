@@ -82,7 +82,7 @@
 .score-canvas { overflow: auto; background: #fff; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-4); touch-action: pan-x pan-y pinch-zoom; }
 .score-canvas svg { max-width: none; height: auto; }
 :root[data-theme='dark'] .score-canvas { background: #f4f1ea; }
-.score-canvas g.note.is-selected, .score-canvas g.note.is-selected * { fill: var(--blue-600); stroke: var(--blue-600); }
+.score-canvas g.note.is-selected, .score-canvas g.note.is-selected * { fill: var(--accent); stroke: var(--accent); }
 .score-canvas g.note { cursor: pointer; }
 
 /* Score studio: properties panel beside the score on wide screens */

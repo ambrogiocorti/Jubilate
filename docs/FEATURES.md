@@ -4,7 +4,7 @@ Stato al 9 novembre 2026. «Verificato» indica una verifica automatica nel brow
 
 | Area | Cosa c'è | Stato |
 |---|---|---|
-| Accesso | Registrazione e accesso con email e password, recupero e reimpostazione password, accesso con Google (codice pronto), sessione PKCE | Email/password verificati; Google in attesa delle credenziali OAuth |
+| Accesso | Registrazione e accesso con email e password, recupero e reimpostazione password, sessione PKCE (l'accesso con Google è stato rimosso) | Email/password verificati |
 | Biblioteca | Elenco numerato, ricerca per numero, titolo, titoli alternativi, testo, autore, insensibile ad accenti e maiuscole; filtri per categoria | Verificato (A) |
 | Lettura | Modalità testo, accordi, spartito; trasposizione con alterazioni corrette; capotasto con accordi da suonare; notazione italiana o internazionale; dimensione e interlinea; ripetizioni complete o compatte; tema chiaro/scuro; schermo intero con schermo sempre acceso; scorrimento automatico | Verificato (B) per accordi e trasposizione |
 | Versioni personali | Copia modificabile, ufficiale intatta; editor di testo e accordi con annulla/ripeti; cronologia, confronto, ripristino; conflitti tra dispositivi; condivisione con link; proposta come ufficiale | Verificato (B) per creazione e salvataggio |

@@ -6,7 +6,7 @@ import { searchSongs } from '../../domain/search';
 import { Icon } from '../../components/ui/Icon';
 import { Button, ButtonLink } from '../../components/ui/Button';
 import { Alert, EmptyState, ListSkeleton } from '../../components/ui/Feedback';
-import type { Category, CategoryKind } from '../../data/types';
+import type { CategoryKind } from '../../data/types';
 
 const GROUPS: { kind: CategoryKind; label: string }[] = [
   { kind: 'mass_moment', label: 'Momenti della Messa' },
@@ -20,7 +20,8 @@ export function LibraryPage() {
   const { isRegistered } = useAuth();
   const [params, setParams] = useSearchParams();
   const q = params.get('q') ?? '';
-  const cat = params.get('cat');
+  // Several categories can be selected: ?cat=a,b,c
+  const selected = useMemo(() => new Set((params.get('cat') ?? '').split(',').filter(Boolean)), [params]);
   const deferredQ = useDeferredValue(q);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -36,9 +37,20 @@ export function LibraryPage() {
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
+  // Within a group (e.g. two Mass moments) any category matches; across groups
+  // (Mass moment + liturgical season) all must match.
+  const categoryGroups = useMemo(() => {
+    const byKind = new Map<string, string[]>();
+    for (const c of categories) {
+      if (!selected.has(c.id)) continue;
+      byKind.set(c.kind, [...(byKind.get(c.kind) ?? []), c.id]);
+    }
+    return [...byKind.values()];
+  }, [categories, selected]);
+
   const results = useMemo(
-    () => searchSongs(index, deferredQ, { categoryIds: cat ? [cat] : undefined }),
-    [index, deferredQ, cat],
+    () => searchSongs(index, deferredQ, { categoryGroups }),
+    [index, deferredQ, categoryGroups],
   );
 
   const setQuery = (value: string) => {
@@ -47,15 +59,21 @@ export function LibraryPage() {
     else next.delete('q');
     setParams(next, { replace: true });
   };
-  const setCat = (id: string | null) => {
+  const setSelected = (ids: Set<string>) => {
     const next = new URLSearchParams(params);
-    if (id) next.set('cat', id);
+    if (ids.size) next.set('cat', [...ids].join(','));
     else next.delete('cat');
     setParams(next, { replace: true });
   };
+  const toggleCat = (id: string) => {
+    const ids = new Set(selected);
+    if (ids.has(id)) ids.delete(id);
+    else ids.add(id);
+    setSelected(ids);
+  };
 
-  const catName = (c: Category) => c.name;
   const byId = new Map(categories.map((c) => [c.id, c]));
+  const selectedNames = [...selected].map((id) => byId.get(id)?.name).filter(Boolean) as string[];
 
   return (
     <div className="container stack-lg">
@@ -94,11 +112,15 @@ export function LibraryPage() {
         </div>
 
         {categories.length > 0 && (
-          <details className="stack-sm" open={Boolean(cat)}>
+          <details className="stack-sm" open={selected.size > 0}>
             <summary className="small muted" style={{ cursor: 'pointer', minHeight: 32, display: 'flex', alignItems: 'center' }}>
-              <span aria-hidden="true" style={{ marginRight: 6 }}>▸</span>Filtra per categoria{cat && byId.get(cat) ? `: ${catName(byId.get(cat)!)}` : ''}
+              <span aria-hidden="true" style={{ marginRight: 6 }}>▸</span>
+              Filtra per categoria{selectedNames.length ? `: ${selectedNames.join(', ')}` : ''}
             </summary>
             <div className="stack" style={{ paddingTop: 'var(--space-2)' }}>
+              <p className="small muted" style={{ margin: 0 }}>
+                Puoi scegliere più categorie. Nello stesso gruppo basta una corrispondenza; tra gruppi diversi devono valere tutte.
+              </p>
               {GROUPS.map((g) => {
                 const items = categories.filter((c) => c.kind === g.kind);
                 if (!items.length) return null;
@@ -107,7 +129,8 @@ export function LibraryPage() {
                     {g.label && <div className="section-title">{g.label}</div>}
                     <div className="chips">
                       {items.map((c) => (
-                        <button key={c.id} type="button" className="chip" aria-pressed={cat === c.id} onClick={() => setCat(cat === c.id ? null : c.id)}>
+                        <button key={c.id} type="button" className="chip" aria-pressed={selected.has(c.id)} onClick={() => toggleCat(c.id)}>
+                          {selected.has(c.id) && <Icon name="check" />}
                           {c.name}
                         </button>
                       ))}
@@ -115,6 +138,13 @@ export function LibraryPage() {
                   </div>
                 );
               })}
+              {selected.size > 0 && (
+                <div>
+                  <Button size="sm" variant="ghost" icon="x" onClick={() => setSelected(new Set())}>
+                    Rimuovi filtri ({selected.size})
+                  </Button>
+                </div>
+              )}
             </div>
           </details>
         )}
@@ -138,7 +168,7 @@ export function LibraryPage() {
               I canti verranno inseriti progressivamente dagli amministratori della parrocchia.
             </EmptyState>
           ) : (
-            <EmptyState icon="search" title="Nessun canto trovato" action={(q || cat) ? <Button onClick={() => { setQuery(''); setCat(null); }}>Azzera filtri</Button> : undefined}>
+            <EmptyState icon="search" title="Nessun canto trovato" action={(q || selected.size) ? <Button onClick={() => setParams(new URLSearchParams(), { replace: true })}>Azzera filtri</Button> : undefined}>
               Prova con il numero del libretto, una parola del titolo o un verso del testo.
             </EmptyState>
           )

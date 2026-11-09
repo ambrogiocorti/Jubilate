@@ -7,7 +7,7 @@ import { useAuth } from '../../app/AuthProvider';
 import { Button } from '../../components/ui/Button';
 import { Field } from '../../components/ui/Field';
 import { Alert } from '../../components/ui/Feedback';
-import { AuthLayout, GoogleButton, safeNext } from './AuthLayout';
+import { AuthLayout, safeNext } from './AuthLayout';
 
 export function passwordProblem(p: string): string | null {
   if (p.length < 8) return 'Almeno 8 caratteri.';
@@ -23,7 +23,6 @@ export default function SignUpPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [busy, setBusy] = useState(false);
-  const [google, setGoogle] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [sent, setSent] = useState(false);
   const [touched, setTouched] = useState(false);
@@ -51,17 +50,6 @@ export default function SignUpPage() {
     if (!data.session) setSent(true);
   }
 
-  async function withGoogle() {
-    setGoogle(true);
-    const { error: err } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: { redirectTo: `${env.siteUrl}/auth/callback?next=${encodeURIComponent(next)}` },
-    });
-    if (err) {
-      setGoogle(false);
-      setError(friendlyError(err, 'Accesso con Google non disponibile al momento.'));
-    }
-  }
 
   if (sent) {
     return (
@@ -80,8 +68,6 @@ export default function SignUpPage() {
       subtitle="La registrazione è gratuita. Per consultare i testi non serve un account."
       footer={<>Hai già un account? <Link to={`/accedi?next=${encodeURIComponent(next)}`}>Accedi</Link></>}
     >
-      <GoogleButton onClick={withGoogle} loading={google} />
-      <div className="auth-divider">oppure con e-mail</div>
       <form className="form" onSubmit={submit} noValidate>
         {error && <Alert tone="danger">{error}</Alert>}
         <Field label="Nome visualizzato" error={touched && !name.trim() ? 'Inserisci un nome.' : null}>

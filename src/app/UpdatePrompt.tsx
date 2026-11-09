@@ -28,24 +28,29 @@ export function UpdatePrompt() {
 
   if (!needRefresh && !offlineReady) return null;
   return (
-    <div className="toasts" style={{ zIndex: 950 }}>
-      <div className="toast" role="status">
-        <Icon name={needRefresh ? 'download' : 'checkCircle'} />
-        <span>{needRefresh ? 'È disponibile una nuova versione di Jubilate.' : 'Jubilate è pronta per l’uso offline.'}</span>
-        {needRefresh ? (
-          <Button size="sm" variant="primary" style={{ marginLeft: 'auto' }} onClick={() => void updateServiceWorker(true)}>
+    <div className="toasts toasts--bottom" style={{ zIndex: 950 }}>
+      <div className={`toast ${needRefresh ? '' : 'toast--success'}`} role="status">
+        <span className="toast__icon" aria-hidden="true">
+          <Icon name={needRefresh ? 'download' : 'checkCircle'} />
+        </span>
+        <span className="toast__message">
+          {needRefresh ? 'È disponibile una nuova versione di Jubilate.' : 'Jubilate è pronta per l’uso offline.'}
+        </span>
+        {needRefresh && (
+          <Button size="sm" variant="primary" style={{ alignSelf: 'center' }} onClick={() => void updateServiceWorker(true)}>
             Aggiorna
           </Button>
-        ) : null}
+        )}
         <button
-          className="toast__action"
-          style={needRefresh ? { marginLeft: 0 } : undefined}
+          type="button"
+          className="toast__close"
+          aria-label={needRefresh ? 'Più tardi' : 'Chiudi messaggio'}
           onClick={() => {
             setNeedRefresh(false);
             setOfflineReady(false);
           }}
         >
-          {needRefresh ? 'Più tardi' : 'OK'}
+          <Icon name="x" />
         </button>
       </div>
     </div>

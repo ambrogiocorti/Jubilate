@@ -53,7 +53,7 @@ Eseguiti contro lo stack Supabase completo avviato in Docker (`npx supabase star
 ## Non ancora verificato
 
 - Funzionamento dell'app pubblicata su GitHub Pages con il progetto Supabase in cloud (lo schema è applicato; la pubblicazione attende l'accesso al repository). La suite e2e passa anche con `BASE_PATH=/Jubilate/`, cioè con lo stesso percorso base di GitHub Pages e la CSP in `<meta>`.
-- Accesso con Google, invio reale delle email di conferma e recupero.
+- Invio reale delle email di conferma e recupero.
 - OCR con Tesseract e PDF scansionati in un browser reale; caricamento di registrazioni audio nello Storage.
 - Safari/iOS e Firefox (i test girano su Chromium).
 - Audit di accessibilità manuale con lettori di schermo.

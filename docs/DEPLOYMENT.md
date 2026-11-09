@@ -14,11 +14,12 @@ Jubilate non è ancora pubblicata. Questa è la procedura prevista; i passi cont
    insert into public.user_roles (user_id, role)
    select id, 'admin' from auth.users where email = '<email>';
    ```
-7. Impostazioni della parrocchia (nome, notazione, durata delle stanze) dalla sezione Amministrazione → Impostazioni.
+7. Primi canti: `supabase/content/primi_canti.sql` (generato da `build_primi_canti.py`) inserisce cinque canti di pubblico dominio con autori, fonti, diritti, categorie, tonalità, metro e accordi, a nome del primo amministratore. Si può eseguire più volte: i titoli già presenti vengono saltati.
+8. Impostazioni della parrocchia (nome, notazione, durata delle stanze) dalla sezione Amministrazione → Impostazioni.
 
-## 2. Accesso con Google 🔑
+## 2. Accesso
 
-Google Cloud Console → credenziali OAuth «Applicazione web» con URI di reindirizzamento `https://<ref>.supabase.co/auth/v1/callback`. Inserire Client ID e Client Secret in Supabase → Auth → Providers → Google. Il segreto resta in Supabase: non va mai nel codice o nelle variabili del frontend.
+Solo e-mail e password: l'accesso con Google è stato rimosso su richiesta. In Supabase → Auth → Providers il provider Google deve restare disattivato.
 
 ## 3. GitHub Pages
 

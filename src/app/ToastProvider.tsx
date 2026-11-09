@@ -47,13 +47,18 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       <div ref={layer} popover="manual" className="toasts" aria-live="polite" aria-atomic="false">
         {toasts.map((t) => (
           <div key={t.id} className={`toast toast--${t.tone}`} role={t.tone === 'danger' ? 'alert' : 'status'}>
-            <Icon name={t.tone === 'success' ? 'checkCircle' : t.tone === 'danger' ? 'alert' : 'info'} />
-            <span>{t.message}</span>
+            <span className="toast__icon" aria-hidden="true">
+              <Icon name={t.tone === 'success' ? 'checkCircle' : t.tone === 'danger' ? 'alert' : 'info'} />
+            </span>
+            <span className="toast__message">{t.message}</span>
             {t.action && (
-              <button className="toast__action" onClick={() => { t.action!.onClick(); dismiss(t.id); }}>
+              <button type="button" className="toast__action" onClick={() => { t.action!.onClick(); dismiss(t.id); }}>
                 {t.action.label}
               </button>
             )}
+            <button type="button" className="toast__close" aria-label="Chiudi messaggio" onClick={() => dismiss(t.id)}>
+              <Icon name="x" />
+            </button>
           </div>
         ))}
       </div>

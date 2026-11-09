@@ -29,7 +29,7 @@ function contentSecurityPolicy(supabaseUrl: string): string {
     "script-src 'self' 'wasm-unsafe-eval' 'sha256-tVxVYUo/Ao+fTnjIOgURM2BCOHMBLamrknKjjlSsI4c=' https://cdn.jsdelivr.net",
     "worker-src 'self' blob:",
     "style-src 'self' 'unsafe-inline'",
-    `img-src 'self' data: blob: ${sb} https://lh3.googleusercontent.com https://i.ytimg.com`,
+    `img-src 'self' data: blob: ${sb} https://i.ytimg.com`,
     `media-src 'self' blob: ${sb}`,
     "font-src 'self' data:",
     `connect-src 'self' ${sb} ${ws} https://cdn.jsdelivr.net https://tessdata.projectnaptha.com`,
@@ -89,7 +89,7 @@ export default defineConfig(({ mode }) => {
         display: 'standalone',
         orientation: 'any',
         background_color: '#ffffff',
-        theme_color: '#0f2744',
+        theme_color: '#5c0a00',
         categories: ['music', 'lifestyle'],
         icons: [
           { src: 'icons/icon-192.png', sizes: '192x192', type: 'image/png' },

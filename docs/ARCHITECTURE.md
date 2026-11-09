@@ -9,7 +9,7 @@ Browser (PWA)                                 Supabase
 │   │            │           │                │   RPC SECURITY DEFINER        │
 │   │      IndexedDB (idb)   │   WebSocket    │ Realtime (postgres_changes)   │
 │   │      libreria, canti,  │◀───────────────│   solo notifiche "rooms"      │
-│   │      coda offline      │                │ Auth (email/password, Google) │
+│   │      coda offline      │                │ Auth (email/password)         │
 │ Service worker (Workbox)   │                │ Storage (bucket privato media)│
 └────────────────────────────┘                └──────────────────────────────┘
 ```

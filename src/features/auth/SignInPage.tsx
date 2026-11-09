@@ -1,13 +1,12 @@
 import { useState, type FormEvent } from 'react';
 import { Link, Navigate, useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
-import { env } from '../../lib/env';
 import { friendlyError } from '../../lib/errors';
 import { useAuth } from '../../app/AuthProvider';
 import { Button } from '../../components/ui/Button';
 import { Field } from '../../components/ui/Field';
 import { Alert } from '../../components/ui/Feedback';
-import { AuthLayout, GoogleButton, safeNext } from './AuthLayout';
+import { AuthLayout, safeNext } from './AuthLayout';
 
 export default function SignInPage() {
   const [params] = useSearchParams();
@@ -17,7 +16,6 @@ export default function SignInPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [busy, setBusy] = useState(false);
-  const [google, setGoogle] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   if (session) return <Navigate to={next} replace />;
@@ -32,18 +30,6 @@ export default function SignInPage() {
     else navigate(next, { replace: true });
   }
 
-  async function withGoogle() {
-    setGoogle(true);
-    setError(null);
-    const { error: err } = await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: { redirectTo: `${env.siteUrl}/auth/callback?next=${encodeURIComponent(next)}` },
-    });
-    if (err) {
-      setGoogle(false);
-      setError(friendlyError(err, 'Accesso con Google non disponibile al momento.'));
-    }
-  }
 
   return (
     <AuthLayout
@@ -51,8 +37,6 @@ export default function SignInPage() {
       subtitle="Preferiti, raccolte, accordi, versioni personali e stanze."
       footer={<>Non hai un account? <Link to={`/registrati?next=${encodeURIComponent(next)}`}>Registrati</Link> · <Link to="/">Continua senza accedere</Link></>}
     >
-      <GoogleButton onClick={withGoogle} loading={google} />
-      <div className="auth-divider">oppure</div>
       <form className="form" onSubmit={submit} noValidate>
         {error && <Alert tone="danger">{error}</Alert>}
         <Field label="E-mail">

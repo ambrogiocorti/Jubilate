@@ -45,7 +45,7 @@ Content-Security-Policy restrittiva (`default-src 'self'`; script solo propri pi
 
 - Supabase Auth con PKCE; password con almeno 8 caratteri, lettere e numeri (`supabase/config.toml` e validazione nel client).
 - Redirect di accesso consentiti solo verso percorsi interni (`safeNext`), per evitare open redirect.
-- Accesso con Google: da attivare nel progetto Supabase (vedi DEPLOYMENT.md).
+- Nessun accesso tramite provider esterni (Google rimosso): solo e-mail e password.
 
 ## Segnalare un problema
 

@@ -1,21 +1,19 @@
 /* ==========================================================================
    Jubilate design tokens
-   Moderno e professionale: bianco, blu istituzionale, blu azione, grigi
+   Moderno e professionale: bianco, bordeaux #5C0A00 (colore della parrocchia), grigi
    neutri, verde successo, rosso errore. Dark mode completa.
    ========================================================================== */
 :root {
   color-scheme: light;
 
   /* Brand */
-  --navy-950: #0a1a2f;
-  --navy-900: #0f2744;
-  --navy-800: #16365c;
-  --navy-700: #1f4675;
-  --blue-700: #1648b8;
-  --blue-600: #1d5fd1;
-  --blue-500: #3b7be6;
-  --blue-100: #e3edfd;
-  --blue-50: #f2f7ff;
+  --wine-950: #3d0700;
+  --wine-900: #5c0a00;   /* colore principale richiesto */
+  --wine-800: #7a1608;
+  --wine-700: #962a1b;
+  --wine-500: #c4503f;
+  --wine-100: #f6e1dd;
+  --wine-50: #fcf3f1;
 
   /* Neutrals */
   --gray-950: #0d1117;
@@ -49,21 +47,21 @@
   --text: #111827;
   --text-muted: var(--gray-600);
   --text-subtle: var(--gray-500);
-  --brand: var(--navy-900);
+  --brand: var(--wine-900);
   --brand-contrast: #ffffff;
-  --accent: var(--blue-600);
-  --accent-hover: var(--blue-700);
-  --accent-soft: var(--blue-50);
-  --accent-soft-strong: var(--blue-100);
+  --accent: var(--wine-900);
+  --accent-hover: var(--wine-950);
+  --accent-soft: var(--wine-50);
+  --accent-soft-strong: var(--wine-100);
   --accent-contrast: #ffffff;
-  --focus: #2f6fe0;
+  --focus: #a8321f;
   --success: var(--green-600);
   --success-soft: var(--green-100);
   --danger: var(--red-600);
   --danger-soft: var(--red-100);
   --warning: var(--amber-600);
   --warning-soft: var(--amber-100);
-  --chord: #1648b8;
+  --chord: var(--wine-800);
   --overlay: rgb(10 26 47 / 0.45);
 
   /* Typography */
@@ -130,21 +128,21 @@
   --text: #e8ecf1;
   --text-muted: #a5afbd;
   --text-subtle: #8792a2;
-  --brand: #dbe7ff;
+  --brand: #f4c9c1;
   --brand-contrast: #0d1117;
-  --accent: #5b95f5;
-  --accent-hover: #7aa9f7;
-  --accent-soft: #15233a;
-  --accent-soft-strong: #1b2f50;
-  --accent-contrast: #0b1424;
-  --focus: #7aa9f7;
+  --accent: #ec9484;
+  --accent-hover: #f3b0a3;
+  --accent-soft: #2a1411;
+  --accent-soft-strong: #3d1a15;
+  --accent-contrast: #1f0602;
+  --focus: #f3b0a3;
   --success: #4cc27a;
   --success-soft: #11291b;
   --danger: #f07070;
   --danger-soft: #331517;
   --warning: #e9a84b;
   --warning-soft: #2e2211;
-  --chord: #8db7ff;
+  --chord: #f2a597;
   --overlay: rgb(0 0 0 / 0.6);
   --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
   --shadow: 0 1px 3px rgb(0 0 0 / 0.5);
@@ -164,21 +162,21 @@
     --text: #e8ecf1;
     --text-muted: #a5afbd;
     --text-subtle: #8792a2;
-    --brand: #dbe7ff;
+    --brand: #f4c9c1;
     --brand-contrast: #0d1117;
-    --accent: #5b95f5;
-    --accent-hover: #7aa9f7;
-    --accent-soft: #15233a;
-    --accent-soft-strong: #1b2f50;
-    --accent-contrast: #0b1424;
-    --focus: #7aa9f7;
+    --accent: #ec9484;
+    --accent-hover: #f3b0a3;
+    --accent-soft: #2a1411;
+    --accent-soft-strong: #3d1a15;
+    --accent-contrast: #1f0602;
+    --focus: #f3b0a3;
     --success: #4cc27a;
     --success-soft: #11291b;
     --danger: #f07070;
     --danger-soft: #331517;
     --warning: #e9a84b;
     --warning-soft: #2e2211;
-    --chord: #8db7ff;
+    --chord: #f2a597;
     --overlay: rgb(0 0 0 / 0.6);
     --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
     --shadow: 0 1px 3px rgb(0 0 0 / 0.5);

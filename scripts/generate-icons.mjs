@@ -12,7 +12,7 @@ async function render(file, size, { rounded, pad }) {
   const scale = (1 - pad * 2);
   const html = `<html><body style="margin:0;background:transparent">
     <svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 64 64">
-      <rect width="64" height="64" rx="${rounded ? 14 : 0}" fill="#0f2744"/>
+      <rect width="64" height="64" rx="${rounded ? 14 : 0}" fill="#5c0a00"/>
       <g transform="translate(${32 - 32 * scale} ${32 - 32 * scale}) scale(${scale})">${inner}</g>
     </svg></body></html>`;
   await page.setViewportSize({ width: size, height: size });

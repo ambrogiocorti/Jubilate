@@ -116,6 +116,7 @@
   font-size: var(--text-sm); white-space: nowrap;
 }
 .chip[aria-pressed='true'] { background: var(--accent-soft-strong); color: var(--accent); border-color: transparent; font-weight: var(--weight-medium); }
+.chip svg { width: 14px; height: 14px; flex: none; }
 .badge {
   display: inline-flex; align-items: center; gap: 4px;
   padding: 2px 8px; border-radius: var(--radius-full);
@@ -144,30 +145,53 @@
 .alert--warning svg { color: var(--warning); }
 
 /* ---------- Toasts ---------- */
+/* Light card with a coloured accent, readable in both themes. Shown at the top
+   of the screen so it never covers the bottom navigation or the keyboard. */
 .toasts {
   pointer-events: none;
   position: fixed; z-index: 900;
   left: 50%; transform: translateX(-50%);
-  bottom: calc(var(--bottomnav-h) + var(--space-4) + env(safe-area-inset-bottom));
-  display: grid; gap: var(--space-2); width: min(92vw, 420px);
+  top: calc(var(--space-3) + env(safe-area-inset-top));
+  display: grid; gap: var(--space-2); width: min(calc(100vw - 32px), 440px);
 }
-@media (min-width: 1024px) { .toasts { bottom: var(--space-6); } }
-.toasts[popover] { inset: auto; right: auto; top: auto; margin: 0; padding: 0; border: 0; background: transparent; overflow: visible; color: inherit; }
+.toasts[popover] { inset: auto; right: auto; bottom: auto; margin: 0; padding: 0; border: 0; background: transparent; overflow: visible; color: var(--text); }
 .toasts[popover]:not(:popover-open) { display: grid; }
 .toast {
-  display: flex; align-items: center; gap: var(--space-3);
-  padding: var(--space-3) var(--space-4);
-  background: var(--gray-900); color: #fff;
+  --tone: var(--accent);
+  --tone-soft: var(--accent-soft);
+  pointer-events: auto;
+  display: flex; align-items: flex-start; gap: var(--space-3);
+  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-4);
+  background: var(--surface-raised); color: var(--text);
+  border: 1px solid var(--border); border-left: 4px solid var(--tone);
   border-radius: var(--radius); box-shadow: var(--shadow-lg);
-  font-size: var(--text-sm);
+  font-size: var(--text-sm); line-height: 1.45;
   animation: toast-in 180ms var(--ease);
 }
-:root[data-theme='dark'] .toast { background: var(--surface-raised); color: var(--text); border: 1px solid var(--border); }
-.toast svg { width: 18px; height: 18px; flex: none; }
-.toast--success svg { color: #5fd38d; }
-.toast--danger svg { color: #ff8a8a; }
-.toast__action { margin-left: auto; color: inherit; background: none; border: 0; font-weight: var(--weight-semibold); text-decoration: underline; }
-@keyframes toast-in { from { opacity: 0; transform: translateY(8px); } }
+.toast--success { --tone: var(--success); --tone-soft: var(--success-soft); }
+.toast--danger { --tone: var(--danger); --tone-soft: var(--danger-soft); }
+.toast__icon {
+  flex: none; display: grid; place-items: center;
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--tone-soft); color: var(--tone);
+}
+.toast__icon svg { width: 16px; height: 16px; }
+.toast__message { flex: 1; min-width: 0; padding-top: 4px; overflow-wrap: anywhere; }
+.toast__action {
+  flex: none; align-self: center; color: var(--tone); background: none; border: 0;
+  padding: var(--space-1) var(--space-2); border-radius: var(--radius-sm);
+  font-weight: var(--weight-semibold); cursor: pointer;
+}
+.toast__action:hover { background: var(--tone-soft); }
+.toast__close {
+  flex: none; display: grid; place-items: center; width: 28px; height: 28px;
+  border: 0; border-radius: var(--radius-sm); background: none; color: var(--text-muted); cursor: pointer;
+}
+.toast__close:hover { background: var(--border); color: var(--text); }
+.toast__close svg { width: 16px; height: 16px; }
+.toasts--bottom { top: auto; bottom: calc(var(--bottomnav-h) + var(--space-4) + env(safe-area-inset-bottom)); }
+@media (min-width: 1024px) { .toasts--bottom { bottom: var(--space-6); } }
+@keyframes toast-in { from { opacity: 0; transform: translateY(-8px); } }
 
 /* ---------- Dialog / sheet ---------- */
 .dialog {
@@ -265,4 +289,3 @@ a.tab { display: inline-flex; align-items: center; text-decoration: none; }
 .status-dot--offline { background: var(--warning); }
 .status-dot--live { background: var(--danger); box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 25%, transparent); }
 
-.toast { pointer-events: auto; }
