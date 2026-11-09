@@ -10,6 +10,10 @@ do $$ begin
   if not exists (select 1 from pg_roles where rolname = 'service_role') then create role service_role nologin noinherit bypassrls; end if;
 end $$;
 
+-- Hosted Supabase: default privileges grant EXECUTE on new public functions
+-- directly to the API roles (not via PUBLIC). Reproduce it so tests catch it.
+alter default privileges in schema public grant execute on functions to anon, authenticated, service_role;
+
 create schema if not exists extensions;
 grant usage on schema extensions to anon, authenticated, service_role;  -- as on Supabase
 create schema if not exists auth;

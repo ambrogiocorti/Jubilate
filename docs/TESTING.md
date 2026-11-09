@@ -7,7 +7,7 @@ Tutti i risultati qui riportati sono stati ottenuti eseguendo davvero i comandi 
 | Livello | Comando | Risultato |
 |---|---|---|
 | Unitari (Vitest) | `npm test` | 128 test in 11 file superati |
-| Sicurezza del database | `npm run test:db` | 70 controlli superati |
+| Sicurezza del database | `npm run test:db` | 74 controlli superati |
 | End-to-end nel browser (Playwright, Chromium, profilo Pixel 7) | `npm run test:e2e` | 15 test superati: scenari A–J e controlli di accessibilità |
 | Tipi | `npm run typecheck` | Nessun errore |
 | Build di produzione | `npm run build` | Riuscita |
@@ -18,7 +18,7 @@ Tutti i risultati qui riportati sono stati ottenuti eseguendo davvero i comandi 
 
 ## Test di sicurezza del database
 
-`supabase/tests/01_security.sql` gira su un Postgres 16 locale con uno shim che riproduce ruoli e funzioni `auth.*` di Supabase (`supabase/tests/run-local.sh`). Verifica, impersonando visitatore, utenti, direttore e amministratore: lettura dei soli contenuti pubblicati, accordi riservati ai registrati, isolamento di preferiti/raccolte/versioni, impossibilità di modificare l'ufficiale o di assegnarsi ruoli, flusso delle proposte, stanze (codici, tentativi limitati, revoca, controllo dello stato), sospensione.
+`supabase/tests/01_security.sql` gira su un Postgres 16 locale con uno shim che riproduce ruoli e funzioni `auth.*` di Supabase (`supabase/tests/run-local.sh`). Verifica, impersonando visitatore, utenti, direttore e amministratore: lettura dei soli contenuti pubblicati, accordi riservati ai registrati, isolamento di preferiti/raccolte/versioni, impossibilità di modificare l'ufficiale o di assegnarsi ruoli, flusso delle proposte, stanze (codici, tentativi limitati, revoca, controllo dello stato), sospensione. `02_function_grants.sql` riproduce i privilegi di default di Supabase hosted (EXECUTE concesso ad anon/authenticated) e controlla che anon possa eseguire solo le funzioni SECURITY DEFINER previste.
 
 ## Test end-to-end
 
