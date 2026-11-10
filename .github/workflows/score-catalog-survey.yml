@@ -1,0 +1,25 @@
+name: Score catalogue survey (PDMX)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [claude/project-thread-3nvi2f]
+    paths: [scripts/pdmx/**, .github/workflows/score-catalog-survey.yml]
+
+permissions:
+  contents: read
+
+jobs:
+  survey:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download PDMX index
+        run: curl -fsSL --retry 3 -o PDMX.csv "https://zenodo.org/records/15571083/files/PDMX.csv?download=1"
+      - name: Survey
+        run: python3 scripts/pdmx/survey.py PDMX.csv && cat survey.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pdmx-survey
+          path: survey.md
