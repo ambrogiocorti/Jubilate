@@ -257,7 +257,7 @@ function ContributionForm({ loaded, arrangementId }: { loaded: Loaded; arrangeme
         <section className="stack" aria-label="Spartito">
           <h2>Spartito</h2>
           {editable && song && (
-            <ScoreFinder title={song.title} onImported={(text, c) => {
+            <ScoreFinder title={song.title} autoImport={!musicxml} onImported={(text, c) => {
               setMusicxml(text);
               if (!scoreName) setScoreName(scoreTitle(parseMusicXml(text)));
               setMessage((m) => (m.trim() ? m : candidateSource(c)));

@@ -304,4 +304,12 @@ a.tab { display: inline-flex; align-items: center; text-decoration: none; }
   display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap;
   padding: var(--space-3); border: 1px dashed var(--border-strong); border-radius: var(--radius);
 }
+.score-finder__results { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-2); }
+.score-finder__results li {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--space-3);
+  padding: var(--space-2) var(--space-3); border: 1px solid var(--border); border-radius: var(--radius);
+}
+.score-finder__result-text { display: grid; gap: 2px; min-width: 0; }
+.score-finder__result-text strong { overflow-wrap: anywhere; }
+.score-finder__cpdl { padding-top: var(--space-3); border-top: 1px solid var(--border); }
 .score-finder__drop.is-dragging { border-color: var(--accent); background: var(--accent-soft); }

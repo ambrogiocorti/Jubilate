@@ -114,6 +114,18 @@ export default defineConfig(({ mode }) => {
             handler: 'CacheFirst',
             options: { cacheName: 'jubilate-score-engine', expiration: { maxEntries: 4 } },
           },
+          {
+            // Free score catalogue (PDMX): index refreshed in the background,
+            // scores kept once opened, so the search also works offline.
+            urlPattern: ({ url }) => url.pathname.endsWith('/catalogo/index.json'),
+            handler: 'StaleWhileRevalidate',
+            options: { cacheName: 'jubilate-catalogo-indice', expiration: { maxEntries: 1 } },
+          },
+          {
+            urlPattern: ({ url }) => /\/catalogo\/[A-Za-z0-9]+\.mxl$/.test(url.pathname),
+            handler: 'CacheFirst',
+            options: { cacheName: 'jubilate-catalogo-spartiti', expiration: { maxEntries: 60 } },
+          },
         ],
       },
       devOptions: { enabled: false },

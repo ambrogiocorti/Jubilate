@@ -22,7 +22,7 @@ import { Alert, EmptyState, Spinner } from '../../components/ui/Feedback';
 import { SongPicker } from '../../components/ui/SongPicker';
 import { ScoreViewer } from './ScoreViewer';
 import { ScoreFinder } from './ScoreFinder';
-import { candidateSource, type ScoreSource } from '../../data/scoreSearch';
+import { candidateRights, candidateSource, type ScoreSource } from '../../data/scoreSearch';
 
 const TYPE_LABEL: Record<NoteType, string> = { whole: 'Semibreve', half: 'Minima', quarter: 'Semiminima', eighth: 'Croma', '16th': 'Semicroma', '32nd': 'Biscroma' };
 const STEP_IT: Record<Step, string> = { C: 'Do', D: 'Re', E: 'Mi', F: 'Fa', G: 'Sol', A: 'La', B: 'Si' };
@@ -78,7 +78,7 @@ export default function ScoreStudioPage() {
   if (error) return <EmptyState icon="music" title="Spartito non disponibile" action={<ButtonLink to="/">Torna alla libreria</ButtonLink>}>{error}</EmptyState>;
   if (!state || !user) return <Spinner />;
   const canWrite = !state.score || state.score.owner_id === user.id || (state.score.owner_id === null && isAdmin);
-  return <Studio key={state.score?.id ?? 'new'} initialScore={state.score} initialXml={state.xml} canWrite={canWrite} songIdParam={params.get('canto')} />;
+  return <Studio key={state.score?.id ?? 'new'} initialScore={state.score} initialXml={state.xml} canWrite={canWrite} songIdParam={params.get('canto')} isCopy={!!params.get('da')} />;
 }
 
 interface StudioProps {
@@ -86,9 +86,10 @@ interface StudioProps {
   initialXml: string;
   canWrite: boolean;
   songIdParam: string | null;
+  isCopy?: boolean;
 }
 
-function Studio({ initialScore, initialXml, canWrite, songIdParam }: StudioProps) {
+function Studio({ initialScore, initialXml, canWrite, songIdParam, isCopy = false }: StudioProps) {
   const toast = useToast();
   const navigate = useNavigate();
   const { user, isAdmin } = useAuth();
@@ -128,6 +129,8 @@ function Studio({ initialScore, initialXml, canWrite, songIdParam }: StudioProps
   }, [xml]);
   const sel = parsed.notes.find((n) => n.id === selected) ?? null;
   const dirty = xml !== savedXml;
+  // The editor still shows the blank score it opened with.
+  const firstXml = useRef(xml).current;
 
   // Local draft (protects against crashes/closing the tab).
   useEffect(() => {
@@ -316,11 +319,11 @@ function Studio({ initialScore, initialXml, canWrite, songIdParam }: StudioProps
       </div>
 
       {!score && canWrite && song && (
-        <ScoreFinder title={song.title} onImported={(text, c) => {
+        <ScoreFinder title={song.title} autoImport={!isCopy && xml === firstXml && !draftOffer} onImported={(text, c) => {
           setHistory((h) => push(h, serializeMusicXml(parseMusicXml(text))));
           setSelected(null);
           setImportedFrom(c);
-          toast.success('Spartito caricato. Controllalo prima di salvare.');
+          toast.success(c.site === 'Catalogo' ? `Caricato «${c.title}» dal catalogo. Controllalo prima di salvare.` : 'Spartito caricato. Controllalo prima di salvare.');
         }} />
       )}
 
@@ -438,7 +441,7 @@ function Studio({ initialScore, initialXml, canWrite, songIdParam }: StudioProps
 
       <SaveDialog
         defaultSource={importedFrom ? candidateSource(importedFrom) : undefined}
-        defaultRights={importedFrom ? 'licensed' : undefined}
+        defaultRights={importedFrom ? candidateRights(importedFrom) : undefined}
         open={saveOpen}
         onClose={() => setSaveOpen(false)}
         busy={busy}

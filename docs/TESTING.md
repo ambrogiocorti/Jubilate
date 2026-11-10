@@ -6,9 +6,9 @@ Tutti i risultati qui riportati sono stati ottenuti eseguendo davvero i comandi 
 
 | Livello | Comando | Risultato |
 |---|---|---|
-| Unitari (Vitest) | `npm test` | 131 test in 11 file superati |
+| Unitari (Vitest) | `npm test` | 135 test in 12 file superati |
 | Sicurezza del database | `npm run test:db` | 74 controlli superati |
-| End-to-end nel browser (Playwright, Chromium, profilo Pixel 7) | `npm run test:e2e` | 18 test superati: scenari A–J, posizione dei messaggi (L), spartito da CPDL (M) e controlli di accessibilità |
+| End-to-end nel browser (Playwright, Chromium, profilo Pixel 7) | `npm run test:e2e` | 19 test superati: scenari A–J, posizione dei messaggi (L), spartiti liberi dal catalogo e da CPDL (M, M2) e controlli di accessibilità |
 | Tipi | `npm run typecheck` | Nessun errore |
 | Build di produzione | `npm run build` | Riuscita |
 
@@ -50,7 +50,11 @@ Eseguiti contro lo stack Supabase completo avviato in Docker (`npx supabase star
 - Al primo accesso l'app non funzionava offline senza un ricaricamento (ora il service worker prende il controllo subito).
 - Link nel testo distinguibili solo per colore.
 
-## Spartiti da CPDL
+## Spartiti liberi
+
+Il catalogo (`catalogo/index.json` e `catalogo/<id>.mxl`) è generato al deploy da `scripts/pdmx/build_catalog.py` a partire da PDMX (zenodo.org/records/15571083): circa 254.000 spartiti MusicXML di MuseScore marcati dagli autori come pubblico dominio o CC0. Si tengono solo i brani sacri e liturgici senza conflitti di licenza; il workflow «Score catalogue check» ne verifica dimensioni e copertura sul ramo di lavoro. Gli scenari M e M2 sostituiscono il catalogo con un piccolo file di prova e verificano il caricamento automatico, la scelta di un altro risultato, la fonte e i diritti precompilati e il caso senza catalogo. Il contenuto reale del catalogo non è verificato da test automatici: la licenza è quella dichiarata dagli autori su MuseScore.
+
+### CPDL
 
 CPDL è protetto da una verifica Cloudflare («Just a moment…», HTTP 403) che blocca ogni richiesta automatica, sia da un server (verificato nei log della Edge Function) sia dal browser. Per questo l'app apre la ricerca su CPDL e l'utente carica il file scaricato; lo scenario M verifica il collegamento, il caricamento e la fonte precompilata.
 

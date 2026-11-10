@@ -25,7 +25,7 @@ Solo e-mail e password: l'accesso con Google è stato rimosso su richiesta. In S
 
 Indirizzo gratuito e senza scadenza: **https://ambrogiocorti.github.io/Jubilate/** (nessun dominio da acquistare o rinnovare).
 
-- Il workflow `.github/workflows/deploy-pages.yml` esegue typecheck, test unitari e build a ogni push su `main` (o a mano da Actions → «Deploy to GitHub Pages») e pubblica `dist`.
+- Il workflow `.github/workflows/deploy-pages.yml` esegue typecheck, test unitari e build a ogni push su `main` (o a mano da Actions → «Deploy to GitHub Pages») e pubblica `dist`. Prima della build scarica PDMX da Zenodo e genera il catalogo degli spartiti liberi (`catalogo/`, conservato nella cache di Actions finché `scripts/pdmx/build_catalog.py` non cambia); se Zenodo non risponde, il sito viene pubblicato senza catalogo e l'app propone solo CPDL.
 - Una tantum: repository → Settings → Pages → Source: **GitHub Actions**. Il repository deve essere pubblico (Pages su repository privati richiede un piano a pagamento).
 - Variabili (Settings → Secrets and variables → Actions → Variables; solo valori pubblicabili, già impostati come predefiniti nel workflow):
   - `VITE_SUPABASE_URL` = `https://<ref>.supabase.co`
