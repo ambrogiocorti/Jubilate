@@ -44,9 +44,31 @@ jobs:
             echo "BASE_PATH=/$repo/" >> "$GITHUB_ENV"
             echo "VITE_SITE_URL=https://${GITHUB_REPOSITORY_OWNER,,}.github.io/$repo" >> "$GITHUB_ENV"
           fi
+      # Free sacred scores (PDMX, public domain / CC0) served next to the app,
+      # so the score search needs no third-party service. Cached between runs;
+      # if PDMX cannot be downloaded the app is published without it.
+      - name: Restore score catalogue
+        id: catalog
+        uses: actions/cache@v4
+        with:
+          path: catalogo
+          key: pdmx-catalog-${{ hashFiles('scripts/pdmx/build_catalog.py') }}
+      - name: Build score catalogue (PDMX)
+        if: steps.catalog.outputs.cache-hit != 'true'
+        continue-on-error: true
+        run: |
+          set -e
+          base="https://zenodo.org/records/15571083/files"
+          curl -fsSL --retry 3 -o "$RUNNER_TEMP/PDMX.csv" "$base/PDMX.csv?download=1"
+          curl -fsSL --retry 3 -o "$RUNNER_TEMP/mxl.tar.gz" "$base/mxl.tar.gz?download=1"
+          rm -rf catalogo "$RUNNER_TEMP/catalogo"
+          python3 scripts/pdmx/build_catalog.py "$RUNNER_TEMP/PDMX.csv" "$RUNNER_TEMP/mxl.tar.gz" "$RUNNER_TEMP/catalogo"
+          mv "$RUNNER_TEMP/catalogo" catalogo
       - run: npm run typecheck
       - run: npm test
       - run: npx vite build
+      - name: Add score catalogue
+        run: if [ -f catalogo/index.json ]; then cp -r catalogo dist/catalogo; else echo "::warning::Score catalogue not available"; fi
       - name: Custom domain
         if: env.CUSTOM_DOMAIN != ''
         run: echo "$CUSTOM_DOMAIN" > dist/CNAME

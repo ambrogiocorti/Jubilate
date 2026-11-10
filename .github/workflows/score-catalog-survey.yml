@@ -1,4 +1,6 @@
-name: Score catalogue survey (PDMX)
+# Builds the PDMX score catalogue on the work branch to check its size and
+# contents before it goes live (the deploy workflow builds it for main).
+name: Score catalogue check (PDMX)
 
 on:
   workflow_dispatch:
@@ -10,16 +12,28 @@ permissions:
   contents: read
 
 jobs:
-  survey:
+  check:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
-      - name: Download PDMX index
-        run: curl -fsSL --retry 3 -o PDMX.csv "https://zenodo.org/records/15571083/files/PDMX.csv?download=1"
-      - name: Survey
-        run: python3 scripts/pdmx/survey.py PDMX.csv && cat survey.md >> "$GITHUB_STEP_SUMMARY"
-      - uses: actions/upload-artifact@v4
-        with:
-          name: pdmx-survey
-          path: survey.md
+      - name: Build catalogue
+        run: |
+          base="https://zenodo.org/records/15571083/files"
+          curl -fsSL --retry 3 -o PDMX.csv "$base/PDMX.csv?download=1"
+          curl -fsSL --retry 3 -o mxl.tar.gz "$base/mxl.tar.gz?download=1"
+          python3 scripts/pdmx/build_catalog.py PDMX.csv mxl.tar.gz catalogo
+      - name: Report
+        run: |
+          python3 - <<'PY'
+          import json, re, unicodedata
+          d = json.load(open("catalogo/index.json"))
+          items = d["items"]
+          print("items", len(items))
+          def n(s): return unicodedata.normalize("NFKD", s).encode("ascii","ignore").decode().lower()
+          for q in ["tu scendi dalle stelle","astro del ciel","adeste fideles","o sanctissima","salve regina","tantum ergo","mira il tuo popolo","ave maria","veni creator","stille nacht"]:
+              hits = [i for i in items if q in n(i["t"])]
+              print(f"{q}: {len(hits)}")
+              for h in hits[:4]: print("   ", h)
+          PY
+          du -sh catalogo; ls catalogo | head -3
