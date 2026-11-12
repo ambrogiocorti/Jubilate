@@ -1,0 +1,189 @@
+/* ==========================================================================
+   Jubilate design tokens
+   Moderno e professionale: bianco, bordeaux #5C0A00 (colore della parrocchia), grigi
+   neutri, verde successo, rosso errore. Dark mode completa.
+   ========================================================================== */
+:root {
+  color-scheme: light;
+
+  /* Brand */
+  --wine-950: #3d0700;
+  --wine-900: #5c0a00;   /* colore principale richiesto */
+  --wine-800: #7a1608;
+  --wine-700: #962a1b;
+  --wine-500: #c4503f;
+  --wine-100: #f6e1dd;
+  --wine-50: #fcf3f1;
+
+  /* Neutrals */
+  --gray-950: #0d1117;
+  --gray-900: #161b22;
+  --gray-850: #1c222b;
+  --gray-800: #232a34;
+  --gray-700: #343d4a;
+  --gray-600: #4d5766;
+  --gray-500: #6b7685;
+  --gray-400: #949eab;
+  --gray-300: #c3cad3;
+  --gray-200: #dfe3e8;
+  --gray-100: #eef1f4;
+  --gray-50: #f7f8fa;
+
+  --green-600: #17803d;
+  --green-100: #e2f5e8;
+  --red-600: #c62f2f;
+  --red-100: #fde7e7;
+  --amber-600: #a35d00;
+  --amber-100: #fdf1dc;
+
+  /* Semantic (light) */
+  --bg: #ffffff;
+  --bg-subtle: var(--gray-50);
+  --bg-muted: var(--gray-100);
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --border: var(--gray-200);
+  --border-strong: var(--gray-300);
+  --text: #111827;
+  --text-muted: var(--gray-600);
+  --text-subtle: var(--gray-500);
+  --brand: var(--wine-900);
+  --brand-contrast: #ffffff;
+  --accent: var(--wine-900);
+  --accent-hover: var(--wine-950);
+  --accent-soft: var(--wine-50);
+  --accent-soft-strong: var(--wine-100);
+  --accent-contrast: #ffffff;
+  --focus: #a8321f;
+  --success: var(--green-600);
+  --success-soft: var(--green-100);
+  --danger: var(--red-600);
+  --danger-soft: var(--red-100);
+  --warning: var(--amber-600);
+  --warning-soft: var(--amber-100);
+  --chord: var(--wine-800);
+  --overlay: rgb(10 26 47 / 0.45);
+
+  /* Typography */
+  --font-ui: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-reading: 'Source Serif 4 Variable', 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-md: 1.0625rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 1.875rem;
+  --text-3xl: 2.25rem;
+  --weight-regular: 420;
+  --weight-medium: 520;
+  --weight-semibold: 620;
+  --weight-bold: 700;
+
+  /* Spacing (4px grid) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+
+  /* Shape & depth */
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --radius-full: 999px;
+  --shadow-sm: 0 1px 2px rgb(16 24 40 / 0.06);
+  --shadow: 0 1px 3px rgb(16 24 40 / 0.08), 0 1px 2px rgb(16 24 40 / 0.04);
+  --shadow-lg: 0 12px 32px rgb(16 24 40 / 0.14), 0 2px 6px rgb(16 24 40 / 0.06);
+
+  /* Layout */
+  --control-h: 44px;          /* WCAG 2.2 target size comfortably above 24px */
+  --control-h-sm: 36px;
+  --sidebar-w: 248px;
+  --topbar-h: 60px;
+  --bottomnav-h: 64px;
+  --content-max: 1120px;
+  --reading-max: 46rem;
+
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --dur: 160ms;
+}
+
+/* Dark theme: explicit choice or system preference */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #0d1117;
+  --bg-subtle: #11161d;
+  --bg-muted: #1a2029;
+  --surface: #131922;
+  --surface-raised: #1a212b;
+  --border: #283140;
+  --border-strong: #354052;
+  --text: #e8ecf1;
+  --text-muted: #a5afbd;
+  --text-subtle: #8792a2;
+  --brand: #f4c9c1;
+  --brand-contrast: #0d1117;
+  --accent: #ec9484;
+  --accent-hover: #f3b0a3;
+  --accent-soft: #2a1411;
+  --accent-soft-strong: #3d1a15;
+  --accent-contrast: #1f0602;
+  --focus: #f3b0a3;
+  --success: #4cc27a;
+  --success-soft: #11291b;
+  --danger: #f07070;
+  --danger-soft: #331517;
+  --warning: #e9a84b;
+  --warning-soft: #2e2211;
+  --chord: #f2a597;
+  --overlay: rgb(0 0 0 / 0.6);
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+  --shadow: 0 1px 3px rgb(0 0 0 / 0.5);
+  --shadow-lg: 0 16px 40px rgb(0 0 0 / 0.55);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --bg: #0d1117;
+    --bg-subtle: #11161d;
+    --bg-muted: #1a2029;
+    --surface: #131922;
+    --surface-raised: #1a212b;
+    --border: #283140;
+    --border-strong: #354052;
+    --text: #e8ecf1;
+    --text-muted: #a5afbd;
+    --text-subtle: #8792a2;
+    --brand: #f4c9c1;
+    --brand-contrast: #0d1117;
+    --accent: #ec9484;
+    --accent-hover: #f3b0a3;
+    --accent-soft: #2a1411;
+    --accent-soft-strong: #3d1a15;
+    --accent-contrast: #1f0602;
+    --focus: #f3b0a3;
+    --success: #4cc27a;
+    --success-soft: #11291b;
+    --danger: #f07070;
+    --danger-soft: #331517;
+    --warning: #e9a84b;
+    --warning-soft: #2e2211;
+    --chord: #f2a597;
+    --overlay: rgb(0 0 0 / 0.6);
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+    --shadow: 0 1px 3px rgb(0 0 0 / 0.5);
+    --shadow-lg: 0 16px 40px rgb(0 0 0 / 0.55);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur: 0ms; }
+}

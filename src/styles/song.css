@@ -1,0 +1,137 @@
+/* ==========================================================================
+   Song reading view — legibility first.
+   --song-scale and --song-leading come from the user's preferences.
+   ========================================================================== */
+.song {
+  --song-size: calc(1.25rem * var(--song-scale, 1));
+  font-family: var(--font-reading);
+  font-size: var(--song-size);
+  line-height: var(--song-leading, 1.55);
+  color: var(--text);
+  max-width: var(--reading-max);
+  margin: 0 auto;
+}
+.song__header { display: grid; gap: var(--space-2); margin-bottom: var(--space-6); font-family: var(--font-ui); }
+.song__number { font-size: var(--text-sm); font-weight: var(--weight-semibold); color: var(--accent); font-variant-numeric: tabular-nums; letter-spacing: 0.02em; }
+.song__title { font-family: var(--font-reading); font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.3rem); font-weight: 600; letter-spacing: -0.015em; line-height: 1.15; }
+.song__meta { font-size: var(--text-sm); color: var(--text-muted); display: flex; gap: var(--space-2) var(--space-4); flex-wrap: wrap; }
+
+.song-section { margin: 0 0 1.4em; break-inside: avoid; }
+.song-section__label {
+  display: block; margin-bottom: 0.25em;
+  font-family: var(--font-ui); font-size: max(0.75rem, calc(var(--song-size) * 0.55));
+  font-weight: var(--weight-semibold); text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text-subtle);
+}
+.song-section--chorus .song-section__body,
+.song-section--refrain .song-section__body { padding-left: 1em; border-left: 2px solid var(--accent-soft-strong); font-style: italic; }
+.song-section--repeat-compact .song-section__body { color: var(--text-muted); }
+.song-repeat-ref { font-family: var(--font-ui); font-size: max(0.8rem, calc(var(--song-size) * 0.62)); color: var(--text-muted); font-style: normal; }
+
+.song-line { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; min-height: 1em; }
+.song-line--empty { min-height: 0.6em; }
+
+/* Chords: every segment is a column (chord above, syllables below). The chord
+   row height is reserved only for lines that carry chords. */
+.song-line--chords { display: flex; flex-wrap: wrap; align-items: flex-end; white-space: normal; }
+.seg { display: inline-flex; flex-direction: column; white-space: pre; }
+.seg__chord {
+  min-height: 1.15em; padding-right: 0.45em;
+  font-family: var(--font-ui); font-size: 0.82em; font-weight: var(--weight-semibold);
+  line-height: 1.15; color: var(--chord); font-style: normal; letter-spacing: 0;
+}
+.seg__chord small { font-weight: var(--weight-regular); color: var(--text-subtle); margin-left: 0.2em; font-size: 0.8em; }
+.seg__text { white-space: pre; }
+.seg__text:empty::after { content: '\00a0'; }
+
+.song-toolbar {
+  position: sticky; top: calc(var(--topbar-h) + env(safe-area-inset-top)); z-index: 40;
+  display: flex; align-items: center; gap: var(--space-2); flex-wrap: wrap;
+  padding: var(--space-2) var(--space-4);
+  background: color-mix(in srgb, var(--bg) 94%, transparent);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-ui);
+}
+.has-room-banner .song-toolbar { top: calc(var(--topbar-h) + 48px + env(safe-area-inset-top)); }
+.song-toolbar__group { display: flex; align-items: center; gap: var(--space-1); }
+.song-toolbar__spacer { flex: 1; }
+.song-body { padding: var(--space-6) var(--space-4) var(--space-16); }
+
+.key-control { display: inline-flex; align-items: center; gap: 2px; border: 1px solid var(--border); border-radius: var(--radius); padding: 2px; }
+.key-control__value { min-width: 4.5rem; text-align: center; font-size: var(--text-sm); font-weight: var(--weight-semibold); font-variant-numeric: tabular-nums; }
+
+/* Auto-scroll floating control: one tap to start/pause, large target. */
+.scroll-fab {
+  position: fixed; z-index: 55; right: var(--space-4);
+  bottom: calc(var(--bottomnav-h) + var(--space-4) + env(safe-area-inset-bottom));
+  display: flex; align-items: center; gap: var(--space-1);
+  padding: var(--space-1); border-radius: var(--radius-full);
+  background: var(--surface-raised); border: 1px solid var(--border); box-shadow: var(--shadow-lg);
+}
+.scroll-fab .btn { border-radius: var(--radius-full); }
+.scroll-fab__speed { min-width: 2ch; text-align: center; font-size: var(--text-sm); font-weight: var(--weight-semibold); font-variant-numeric: tabular-nums; }
+@media (min-width: 1024px) { .scroll-fab { bottom: var(--space-6); right: var(--space-6); } }
+
+/* Fullscreen reading */
+.reading-fullscreen { background: var(--bg); overflow-y: auto; }
+.reading-fullscreen .song-body { padding-top: var(--space-8); }
+
+/* Score */
+.score-viewer { display: grid; gap: var(--space-3); }
+.score-canvas { overflow: auto; background: #fff; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: var(--space-4); touch-action: pan-x pan-y pinch-zoom; }
+.score-canvas svg { max-width: none; height: auto; }
+:root[data-theme='dark'] .score-canvas { background: #f4f1ea; }
+.score-canvas g.note.is-selected, .score-canvas g.note.is-selected * { fill: var(--accent); stroke: var(--accent); }
+.score-canvas g.note { cursor: pointer; }
+
+.score-canvas > div + div { margin-top: var(--space-4); }
+.score-studio, .score-studio > * { min-width: 0; }
+
+/* ---------- Score editor ---------- */
+.score-studio__bar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); flex-wrap: wrap; }
+.score-edit {
+  position: sticky; z-index: 20;
+  bottom: calc(var(--bottomnav-h) + env(safe-area-inset-bottom) + var(--space-2));
+  display: grid; gap: var(--space-2); padding: var(--space-3);
+  box-shadow: var(--shadow-lg, 0 8px 24px rgb(0 0 0 / 0.12));
+  max-height: 44dvh;
+  margin-top: var(--space-3); overflow-y: auto; overscroll-behavior: contain;
+}
+@media (min-width: 1024px) { .score-edit { bottom: var(--space-3); } }
+.score-edit__head { display: flex; align-items: center; gap: var(--space-2); min-height: 36px; }
+.score-edit__status { flex: 1; margin: 0; font-weight: var(--weight-semibold); text-align: center; }
+.score-edit__head .score-edit__status:only-child { text-align: left; font-weight: var(--weight-medium); color: var(--text-muted); }
+.score-edit__tabs {
+  display: flex; gap: 2px; padding: 3px; overflow-x: auto; scrollbar-width: none;
+  background: var(--bg-muted); border: 1px solid var(--border); border-radius: var(--radius);
+}
+.score-edit__tabs::-webkit-scrollbar { display: none; }
+.score-edit__tabs button {
+  flex: 1 0 auto; min-height: 36px; padding: 0 var(--space-3); border: 0; border-radius: calc(var(--radius) - 3px);
+  background: transparent; color: var(--text-muted); font-size: var(--text-sm); font-weight: var(--weight-medium); white-space: nowrap;
+}
+.score-edit__tabs button[aria-selected='true'] { background: var(--surface-raised); color: var(--text); box-shadow: var(--shadow-sm); }
+.score-edit__body { padding-top: var(--space-1); }
+.score-edit__notes { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: var(--space-1); }
+.score-edit__key {
+  min-height: 44px; padding: 0; border: 1px solid var(--border-strong); border-radius: var(--radius);
+  background: var(--surface); color: var(--text); font-size: var(--text-md); font-weight: var(--weight-semibold);
+}
+.score-edit__key:disabled { opacity: 0.45; }
+.score-edit__key--sm { font-size: var(--text-xs); }
+.score-edit__mods .score-edit__key { min-height: 40px; font-weight: var(--weight-medium); }
+.score-edit__key[aria-pressed='true'] { background: var(--accent); border-color: var(--accent); color: var(--accent-contrast, #fff); }
+.score-edit__durations { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--space-1); }
+.score-edit__durations button {
+  display: grid; place-items: center; min-height: 48px; padding: var(--space-1);
+  border: 1px solid var(--border-strong); border-radius: var(--radius); background: var(--surface); color: var(--text); font-size: var(--text-xs, 12px);
+}
+.score-edit__durations button[aria-pressed='true'] { background: var(--accent); border-color: var(--accent); color: var(--accent-contrast, #fff); }
+.score-edit__fields { display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+.score-edit__check { display: flex; gap: var(--space-2); align-items: flex-start; color: var(--text-muted); }
+.score-edit__check input { margin-top: 3px; }
+.score-edit .btn[aria-pressed='true'] { background: var(--accent-soft); border-color: var(--accent); color: var(--text); }
+/* Selected note scrolled into view stays clear of the header and of the editing panel. */
+.score-canvas g.note.is-selected { scroll-margin-top: calc(var(--topbar-h, 64px) + var(--space-4)); scroll-margin-bottom: calc(46dvh + var(--bottomnav-h)); }
+.score-studio-header h1 { font-size: 1.5rem; }
