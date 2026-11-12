@@ -34,7 +34,7 @@ export function UpdatePrompt() {
           <Icon name={needRefresh ? 'download' : 'checkCircle'} />
         </span>
         <span className="toast__message">
-          {needRefresh ? 'È disponibile una nuova versione di Jubilate.' : 'Jubilate è pronta per l’uso offline.'}
+          {needRefresh ? 'È disponibile una nuova versione di Jubilate Deo.' : 'Jubilate Deo è pronta per l’uso offline.'}
         </span>
         {needRefresh && (
           <Button size="sm" variant="primary" style={{ alignSelf: 'center' }} onClick={() => void updateServiceWorker(true)}>

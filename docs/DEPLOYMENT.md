@@ -1,10 +1,10 @@
 # Pubblicazione
 
-Jubilate non è ancora pubblicata. Questa è la procedura prevista; i passi contrassegnati con 🔑 richiedono credenziali o decisioni del responsabile del progetto.
+Jubilate Deo non è ancora pubblicata. Questa è la procedura prevista; i passi contrassegnati con 🔑 richiedono credenziali o decisioni del responsabile del progetto.
 
 ## 1. Progetto Supabase dedicato 🔑
 
-1. Creare un progetto **nuovo e dedicato a Jubilate** (regione UE, ad esempio Francoforte; piano gratuito). Non riutilizzare database di altri progetti.
+1. Creare un progetto **nuovo e dedicato a Jubilate Deo** (regione UE, ad esempio Francoforte; piano gratuito). Non riutilizzare database di altri progetti.
 2. Applicare le migrazioni: `npx supabase link --project-ref <ref>` e `npx supabase db push` (oppure, se la porta 5432 non è raggiungibile, con l'endpoint HTTPS `POST /v1/projects/<ref>/database/query` della Management API). **Non** applicare `supabase/seed.sql` in produzione.
 3. Controllare gli avvisi di sicurezza e prestazioni (Advisors) del progetto.
 4. Auth → URL Configuration: Site URL `https://ambrogiocorti.github.io/Jubilate`; Redirect URLs `https://ambrogiocorti.github.io/Jubilate/auth/callback` (con un dominio personalizzato, `https://<dominio>` e `https://<dominio>/auth/callback`).

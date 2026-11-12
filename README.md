@@ -1,8 +1,8 @@
-# Jubilate
+# Jubilate Deo
 
-**Jubilate Deo — La musica che unisce la comunità.**
+**La musica che unisce la comunità.**
 
-Jubilate è una Progressive Web App per i canti della parrocchia: testi, accordi e spartiti consultabili da telefono, tablet e computer, anche senza connessione, con stanze in diretta che permettono al direttore del coro di mostrare a tutti il canto corrente durante le celebrazioni.
+Jubilate Deo è una Progressive Web App per i canti della parrocchia: testi, accordi e spartiti consultabili da telefono, tablet e computer, anche senza connessione, con stanze in diretta che permettono al direttore del coro di mostrare a tutti il canto corrente durante le celebrazioni.
 
 - **Visitatori**: leggono i testi pubblicati e cercano per numero, titolo, parole o autore.
 - **Utenti registrati**: accordi, trasposizione, capotasto, notazione italiana o internazionale, preferiti, raccolte, versioni personali, spartiti, metronomo, stanze, uso offline, proposte di correzione.

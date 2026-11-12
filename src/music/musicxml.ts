@@ -768,7 +768,7 @@ export function createEmptyScore(opts: { title: string; partName?: string; fifth
     return `<measure number="${i + 1}">${attrs}<note id="${newId()}"><rest measure="yes"/><duration>${measureDur}</duration><voice>1</voice></note></measure>`;
   }).join('');
   return `<?xml version="1.0" encoding="UTF-8"?>
-<score-partwise version="4.0"><work><work-title>${esc(opts.title)}</work-title></work><identification><encoding><software>Jubilate</software></encoding></identification><part-list><score-part id="P1"><part-name>${esc(opts.partName ?? 'Voce')}</part-name></score-part></part-list><part id="P1">${measures}</part></score-partwise>`;
+<score-partwise version="4.0"><work><work-title>${esc(opts.title)}</work-title></work><identification><encoding><software>Jubilate Deo</software></encoding></identification><part-list><score-part id="P1"><part-name>${esc(opts.partName ?? 'Voce')}</part-name></score-part></part-list><part id="P1">${measures}</part></score-partwise>`;
 }
 
 // ---------------------------------------------------------------------------

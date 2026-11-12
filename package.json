@@ -2,7 +2,7 @@
   "name": "jubilate",
   "private": true,
   "version": "0.1.0",
-  "description": "Jubilate — La musica che unisce la comunità. Piattaforma per i canti parrocchiali.",
+  "description": "Jubilate Deo — La musica che unisce la comunità. Piattaforma per i canti parrocchiali.",
   "type": "module",
   "engines": {
     "node": ">=22"

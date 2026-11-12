@@ -11,7 +11,7 @@ export function ConfigMissing() {
           <p className="muted">
             {env.secretKeyRejected
               ? 'È stata indicata una chiave segreta (service role). Per sicurezza non viene mai usata nel browser: imposta la chiave pubblicabile.'
-              : 'Jubilate non è collegata a un progetto Supabase.'}
+              : 'Jubilate Deo non è collegata a un progetto Supabase.'}
           </p>
         </div>
         <p className="small muted">

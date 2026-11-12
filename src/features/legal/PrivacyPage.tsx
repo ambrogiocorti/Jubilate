@@ -8,12 +8,12 @@ import { LegalPage } from './LegalPage';
  * services listed in the CSP (vite.config.ts).
  */
 export default function PrivacyPage() {
-  const owner = env.privacyOwner || 'la parrocchia che gestisce questa installazione di Jubilate';
+  const owner = env.privacyOwner || 'la parrocchia che gestisce questa installazione di Jubilate Deo';
   const contact = env.privacyContact;
   return (
     <LegalPage title="Informativa sulla privacy" updated="11 novembre 2026">
       <p>
-        Jubilate è l'app dei canti della parrocchia. È gratuita, non contiene pubblicità e non traccia gli utenti.
+        Jubilate Deo è l'app dei canti della parrocchia. È gratuita, non contiene pubblicità e non traccia gli utenti.
         Questa pagina spiega quali dati personali tratta, perché e quali diritti hai, come previsto dal Regolamento
         europeo 2016/679 (GDPR).
       </p>
@@ -21,7 +21,7 @@ export default function PrivacyPage() {
       <section className="stack-sm" aria-labelledby="pv-owner">
         <h2 id="pv-owner">Chi tratta i dati</h2>
         <p>
-          Il titolare del trattamento è {owner}{env.privacyOwner ? ', che gestisce Jubilate per la comunità parrocchiale' : ''}.{' '}
+          Il titolare del trattamento è {owner}{env.privacyOwner ? ', che gestisce Jubilate Deo per la comunità parrocchiale' : ''}.{' '}
           {contact
             ? <>Per qualsiasi richiesta sulla privacy puoi scrivere a <strong>{contact}</strong>.</>
             : <>Per qualsiasi richiesta sulla privacy rivolgiti al parroco o all'amministratore dell'app.</>}

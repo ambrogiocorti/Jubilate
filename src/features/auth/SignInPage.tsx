@@ -33,7 +33,7 @@ export default function SignInPage() {
 
   return (
     <AuthLayout
-      title="Accedi a Jubilate"
+      title="Accedi a Jubilate Deo"
       subtitle="Preferiti, raccolte, accordi, versioni personali e stanze."
       footer={<>Non hai un account? <Link to={`/registrati?next=${encodeURIComponent(next)}`}>Registrati</Link> · <Link to="/">Continua senza accedere</Link></>}
     >

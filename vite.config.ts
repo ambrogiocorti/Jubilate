@@ -78,8 +78,8 @@ export default defineConfig(({ mode }) => {
       injectRegister: false,
       includeAssets: ['favicon.svg', 'icons/apple-touch-icon.png'],
       manifest: {
-        name: 'Jubilate — La musica che unisce la comunità',
-        short_name: 'Jubilate',
+        name: 'Jubilate Deo — La musica che unisce la comunità',
+        short_name: 'Jubilate Deo',
         description: 'Canti, accordi e spartiti per le celebrazioni della parrocchia.',
         lang: 'it',
         dir: 'ltr',

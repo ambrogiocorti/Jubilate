@@ -377,7 +377,7 @@ function Rights() {
   return (
     <div className="stack">
       <h2>Diritti e fonti</h2>
-      <Alert tone="info">Jubilate pubblica solo testi e musiche di cui la parrocchia dispone: opere proprie, pubblico dominio, materiale autorizzato o coperto da licenza. Qui trovi i canti pubblicati per cui mancano informazioni.</Alert>
+      <Alert tone="info">Jubilate Deo pubblica solo testi e musiche di cui la parrocchia dispone: opere proprie, pubblico dominio, materiale autorizzato o coperto da licenza. Qui trovi i canti pubblicati per cui mancano informazioni.</Alert>
       <section className="stack-sm">
         <h3 className="section-title">Diritti da verificare ({unknown.length})</h3>
         {unknown.length === 0 ? <p className="small muted">Nessuno.</p> : (
