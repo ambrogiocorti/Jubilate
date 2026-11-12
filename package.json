@@ -1,6 +1,7 @@
 {
   "name": "jubilate",
   "private": true,
+  "license": "UNLICENSED",
   "version": "0.1.0",
   "description": "Jubilate Deo — La musica che unisce la comunità. Piattaforma per i canti parrocchiali.",
   "type": "module",

@@ -52,3 +52,7 @@ select id, 'admin' from auth.users where email = 'tuo@indirizzo.it';
 ## Contenuti e diritti
 
 Il repository non contiene testi del libretto parrocchiale. I dati di esempio sono due canti originali scritti per i test e tre testi latini di pubblico dominio. I canti reali vanno caricati dagli amministratori indicando fonte e diritti (opera propria, pubblico dominio, autorizzazione o licenza).
+
+## Licenza
+
+Tutti i diritti riservati. Vedi [LICENSE](LICENSE).
