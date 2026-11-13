@@ -46,7 +46,7 @@ export default function CollectionsPage() {
       </header>
       {error && <Alert tone="danger">{error}</Alert>}
       {!items && !error ? <ListSkeleton rows={4} /> : items && items.length === 0 ? (
-        <EmptyState icon="folder" title="Nessuna raccolta">Crea una raccolta e aggiungi i canti dalla biblioteca o dal menu di ogni canto.</EmptyState>
+        <EmptyState icon="folder" title="Nessuna raccolta">Crea una raccolta e aggiungi i canti dal libretto o dal menu di ogni canto.</EmptyState>
       ) : (
         <ul role="list" className="list">
           {items?.map((c) => (

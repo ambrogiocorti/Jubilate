@@ -137,7 +137,7 @@ export default function CelebrationPage() {
           {canManage && <Button icon="plus" onClick={() => setPicker(true)}>Aggiungi canto</Button>}
         </div>
         {songs.length === 0 ? (
-          <EmptyState icon="music" title="Nessun canto in scaletta">{canManage ? 'Aggiungi i canti dalla biblioteca.' : 'Il direttore non ha ancora preparato la scaletta.'}</EmptyState>
+          <EmptyState icon="music" title="Nessun canto in scaletta">{canManage ? 'Aggiungi i canti dal libretto.' : 'Il direttore non ha ancora preparato la scaletta.'}</EmptyState>
         ) : (
           <ol className="list" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
             {songs.map((s, i) => {

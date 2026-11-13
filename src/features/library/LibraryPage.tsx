@@ -79,7 +79,7 @@ export function LibraryPage() {
     <div className="container stack-lg">
       <header className="page-header" style={{ marginBottom: 0 }}>
         <div className="page-header__text">
-          <h1>Biblioteca dei canti</h1>
+          <h1>Libretto dei canti e accordi</h1>
           <p>{entries.length ? `${entries.length} canti disponibili` : 'La musica che unisce la comunità'}</p>
         </div>
         {isRegistered && (
@@ -151,7 +151,7 @@ export function LibraryPage() {
       </div>
 
       {error && !entries.length && (
-        <Alert tone="danger" title="Biblioteca non disponibile">
+        <Alert tone="danger" title="Libretto non disponibile">
           {error} <Button size="sm" variant="ghost" onClick={() => void refresh()}>Riprova</Button>
         </Alert>
       )}
@@ -164,7 +164,7 @@ export function LibraryPage() {
           <ListSkeleton />
         ) : results.length === 0 ? (
           entries.length === 0 ? (
-            <EmptyState icon="library" title="La biblioteca è ancora vuota">
+            <EmptyState icon="library" title="Il libretto è ancora vuoto">
               I canti verranno inseriti progressivamente dagli amministratori della parrocchia.
             </EmptyState>
           ) : (

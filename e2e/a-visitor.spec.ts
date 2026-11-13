@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test('A — un visitatore cerca un canto e legge il testo senza registrarsi', async ({ page }) => {
   await page.goto('./');
-  await expect(page.getByRole('heading', { name: 'Biblioteca dei canti' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Libretto dei canti e accordi' })).toBeVisible();
   // Accent- and case-insensitive search on the lyrics.
   await page.getByRole('searchbox').fill('MISERICORDIAE');
   await expect(page.getByRole('link', { name: /Salve Regina/ })).toBeVisible();

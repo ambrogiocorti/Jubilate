@@ -156,7 +156,7 @@ export function SongReader({ songId, arrangementId, live }: SongReaderProps) {
         <EmptyState
           icon={navigator.onLine ? 'alert' : 'wifiOff'}
           title={navigator.onLine ? 'Canto non disponibile' : 'Canto non scaricato'}
-          action={<ButtonLink to="/" variant="primary">Torna alla biblioteca</ButtonLink>}
+          action={<ButtonLink to="/" variant="primary">Torna al libretto</ButtonLink>}
         >
           {navigator.onLine ? error : 'Questo canto non è stato salvato sul dispositivo. Scaricalo quando sei online per consultarlo offline.'}
         </EmptyState>

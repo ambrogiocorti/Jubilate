@@ -8,7 +8,7 @@ export function AuthLayout({ title, subtitle, children, footer }: { title: strin
       <div className="stack" style={{ width: 'min(100%, 420px)' }}>
         <div className="auth-card">
           <div className="auth-card__head">
-            <Link to="/" aria-label="Torna alla biblioteca"><img src={publicAsset('favicon.svg')} alt="" /></Link>
+            <Link to="/" aria-label="Torna al libretto"><img src={publicAsset('favicon.svg')} alt="" /></Link>
             <h1 style={{ fontSize: 'var(--text-xl)' }}>{title}</h1>
             {subtitle && <p className="muted small">{subtitle}</p>}
           </div>

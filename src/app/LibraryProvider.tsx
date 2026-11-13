@@ -56,7 +56,7 @@ export function LibraryProvider({ children }: { children: ReactNode }) {
       setFromCache(false);
       setError(null);
     } catch (err) {
-      setError(friendlyError(err, 'Impossibile aggiornare la biblioteca.'));
+      setError(friendlyError(err, 'Impossibile aggiornare il libretto dei canti.'));
     } finally {
       setLoading(false);
     }

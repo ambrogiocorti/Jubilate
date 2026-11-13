@@ -89,7 +89,7 @@ export default function CelebrationsPage({ kind }: { kind: 'celebration' | 'rehe
         <ListSkeleton rows={4} />
       ) : items && items.length === 0 ? (
         <EmptyState icon={kind === 'rehearsal' ? 'mic' : 'calendar'} title={kind === 'rehearsal' ? 'Nessuna prova in programma' : 'Nessuna celebrazione'}>
-          {isDirector ? 'Crea la prima scaletta e aggiungi i canti dalla biblioteca.' : 'Quando un direttore pubblicherà una scaletta la troverai qui.'}
+          {isDirector ? 'Crea la prima scaletta e aggiungi i canti dal libretto.' : 'Quando un direttore pubblicherà una scaletta la troverai qui.'}
         </EmptyState>
       ) : (
         <>

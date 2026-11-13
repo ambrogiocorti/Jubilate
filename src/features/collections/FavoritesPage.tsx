@@ -16,7 +16,7 @@ export default function FavoritesPage() {
         <div className="page-header__text"><h1>Preferiti</h1><p>I canti che hai contrassegnato con il cuore.</p></div>
       </header>
       {songs.length === 0 ? (
-        <EmptyState icon="heart" title="Nessun preferito" action={<ButtonLink to="/" variant="primary">Sfoglia la biblioteca</ButtonLink>}>
+        <EmptyState icon="heart" title="Nessun preferito" action={<ButtonLink to="/" variant="primary">Sfoglia il libretto</ButtonLink>}>
           Apri un canto e tocca il cuore nella barra in alto per ritrovarlo qui.
         </EmptyState>
       ) : (

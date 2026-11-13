@@ -14,7 +14,7 @@ interface NavItem { to: string; label: string; icon: IconName; end?: boolean }
 
 function useNav() {
   const { isRegistered, isDirector, isAdmin } = useAuth();
-  const main: NavItem[] = [{ to: '/', label: 'Biblioteca', icon: 'library', end: true }];
+  const main: NavItem[] = [{ to: '/', label: 'Libretto dei canti e accordi', icon: 'library', end: true }];
   const personal: NavItem[] = isRegistered
     ? [
         { to: '/preferiti', label: 'Preferiti', icon: 'heart' },
@@ -32,7 +32,7 @@ function useNav() {
   const device: NavItem[] = [{ to: '/offline', label: 'Disponibili offline', icon: 'download' }];
   const admin: NavItem[] = isAdmin ? [{ to: '/admin', label: 'Amministrazione', icon: 'shield' }] : [];
   const bottom: NavItem[] = [
-    { to: '/', label: 'Biblioteca', icon: 'library', end: true },
+    { to: '/', label: 'Libretto', icon: 'library', end: true },
     ...(isRegistered ? [{ to: '/raccolte', label: 'Raccolte', icon: 'folder' as IconName }] : []),
     { to: '/stanze', label: 'Stanze', icon: 'radio' },
     ...(isDirector ? [{ to: '/celebrazioni', label: 'Scalette', icon: 'calendar' as IconName }] : []),
@@ -58,7 +58,7 @@ function NavGroup({ label, items }: { label?: string; items: NavItem[] }) {
 
 export function Brand({ sub = false }: { sub?: boolean }) {
   return (
-    <Link to="/" className="brand" aria-label="Jubilate Deo, vai alla biblioteca">
+    <Link to="/" className="brand" aria-label="Jubilate Deo, vai al libretto dei canti">
       <img src={publicAsset('favicon.svg')} alt="" width={30} height={30} />
       <span>
         Jubilate Deo

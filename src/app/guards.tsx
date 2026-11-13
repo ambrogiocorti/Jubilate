@@ -13,7 +13,7 @@ export function RequireAuth() {
   if (profile?.is_suspended) {
     return (
       <EmptyState icon="shield" title="Account sospeso">
-        Il tuo account è stato sospeso dall’amministratore. Puoi continuare a consultare la biblioteca pubblica.
+        Il tuo account è stato sospeso dall’amministratore. Puoi continuare a consultare il libretto dei canti.
       </EmptyState>
     );
   }

@@ -24,7 +24,7 @@ export default function ArrangementsPage() {
       </header>
       {error && <Alert tone="danger">{error}</Alert>}
       {!items && !error ? <ListSkeleton rows={4} /> : items && items.length === 0 ? (
-        <EmptyState icon="layers" title="Nessuna versione personale" action={<ButtonLink to="/" variant="primary">Vai alla biblioteca</ButtonLink>}>
+        <EmptyState icon="layers" title="Nessuna versione personale" action={<ButtonLink to="/" variant="primary">Vai al libretto</ButtonLink>}>
           Apri un canto e scegli «Crea versione personale» dal menu delle azioni.
         </EmptyState>
       ) : (
