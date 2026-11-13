@@ -245,6 +245,32 @@ otp_expiry = 3600
 # admin_email = "admin@email.com"
 # sender_name = "Admin"
 
+
+# E-mail templates (Jubilate Deo). The same files are used on the hosted project.
+[auth.email.template.confirmation]
+subject = "Conferma il tuo indirizzo e-mail – Jubilate Deo"
+content_path = "./supabase/templates/confirmation.html"
+
+[auth.email.template.recovery]
+subject = "Reimposta la password – Jubilate Deo"
+content_path = "./supabase/templates/recovery.html"
+
+[auth.email.template.email_change]
+subject = "Conferma il nuovo indirizzo e-mail – Jubilate Deo"
+content_path = "./supabase/templates/email_change.html"
+
+[auth.email.template.magic_link]
+subject = "Il tuo collegamento di accesso – Jubilate Deo"
+content_path = "./supabase/templates/magic_link.html"
+
+[auth.email.template.invite]
+subject = "Sei stato invitato su Jubilate Deo"
+content_path = "./supabase/templates/invite.html"
+
+[auth.email.template.reauthentication]
+subject = "Il tuo codice di verifica – Jubilate Deo"
+content_path = "./supabase/templates/reauthentication.html"
+
 # Uncomment to customize email template
 # [auth.email.template.invite]
 # subject = "You have been invited"
