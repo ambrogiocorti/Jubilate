@@ -1,9 +1,7 @@
 # Builds Jubilate and publishes it on GitHub Pages.
 #
-# Default address: https://<owner>.github.io/<repo>/ (free, no domain needed).
-# For a custom domain set the repository variable CUSTOM_DOMAIN (e.g.
-# jubilate.example.org): the app is then built for the site root and a CNAME
-# file is added. Only publishable values are used here; never add secret keys.
+# Published at https://jubilate-deo.it (custom domain, site root + CNAME file).
+# The repository variable CUSTOM_DOMAIN overrides the domain. Only publishable values are used here; never add secret keys.
 name: Deploy to GitHub Pages
 
 on:
@@ -26,7 +24,7 @@ jobs:
     env:
       VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL || 'https://odunxiuirkaodmbrayot.supabase.co' }}
       VITE_SUPABASE_PUBLISHABLE_KEY: ${{ vars.VITE_SUPABASE_PUBLISHABLE_KEY || 'sb_publishable_neCsumXqxBYrBvbG7CyTbQ_am8KyD9A' }}
-      CUSTOM_DOMAIN: ${{ vars.CUSTOM_DOMAIN }}
+      CUSTOM_DOMAIN: ${{ vars.CUSTOM_DOMAIN || 'jubilate-deo.it' }}
       # Privacy notice: name of the parish running Jubilate and a contact
       # (e-mail or address). Repository variables, shown publicly in the app.
       VITE_PRIVACY_OWNER: ${{ vars.VITE_PRIVACY_OWNER || 'Ambrogio Corti' }}

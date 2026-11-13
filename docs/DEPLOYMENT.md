@@ -7,7 +7,7 @@ Jubilate Deo non è ancora pubblicata. Questa è la procedura prevista; i passi 
 1. Creare un progetto **nuovo e dedicato a Jubilate Deo** (regione UE, ad esempio Francoforte; piano gratuito). Non riutilizzare database di altri progetti.
 2. Applicare le migrazioni: `npx supabase link --project-ref <ref>` e `npx supabase db push` (oppure, se la porta 5432 non è raggiungibile, con l'endpoint HTTPS `POST /v1/projects/<ref>/database/query` della Management API). **Non** applicare `supabase/seed.sql` in produzione.
 3. Controllare gli avvisi di sicurezza e prestazioni (Advisors) del progetto.
-4. Auth → URL Configuration: Site URL `https://ambrogiocorti.github.io/Jubilate`; Redirect URLs `https://ambrogiocorti.github.io/Jubilate/auth/callback` (con un dominio personalizzato, `https://<dominio>` e `https://<dominio>/auth/callback`).
+4. Auth → URL Configuration: Site URL `https://jubilate-deo.it`; Redirect URLs `https://jubilate-deo.it/auth/callback`, `https://www.jubilate-deo.it/auth/callback` e, per le installazioni precedenti, `https://ambrogiocorti.github.io/Jubilate/auth/callback`.
 5. Auth → password: minimo 8 caratteri, lettere e numeri. Abilitare la conferma dell'email.
 6. Primo amministratore: dopo la registrazione, dall'editor SQL del progetto
    ```sql
@@ -23,7 +23,7 @@ Solo e-mail e password: l'accesso con Google è stato rimosso su richiesta. In S
 
 ## 3. GitHub Pages
 
-Indirizzo gratuito e senza scadenza: **https://ambrogiocorti.github.io/Jubilate/** (nessun dominio da acquistare o rinnovare).
+Indirizzo: **https://jubilate-deo.it** (dominio personalizzato su GitHub Pages; il vecchio https://ambrogiocorti.github.io/Jubilate/ rimanda lì).
 
 - Il workflow `.github/workflows/deploy-pages.yml` esegue typecheck, test unitari e build a ogni push su `main` (o a mano da Actions → «Deploy to GitHub Pages») e pubblica `dist`. Prima della build scarica PDMX da Zenodo e genera il catalogo degli spartiti liberi (`catalogo/`, conservato nella cache di Actions finché `scripts/pdmx/build_catalog.py` non cambia); se Zenodo non risponde, il sito viene pubblicato senza catalogo e l'app propone solo CPDL.
 - Una tantum: repository → Settings → Pages → Source: **GitHub Actions**. Il repository deve essere pubblico (Pages su repository privati richiede un piano a pagamento).
@@ -31,8 +31,8 @@ Indirizzo gratuito e senza scadenza: **https://ambrogiocorti.github.io/Jubilate/
   - `VITE_SUPABASE_URL` = `https://<ref>.supabase.co`
   - `VITE_SUPABASE_PUBLISHABLE_KEY` = chiave **pubblicabile** (`sb_publishable_…`). L'app rifiuta di avviarsi con una chiave segreta.
   - `VITE_PRIVACY_OWNER` e `VITE_PRIVACY_CONTACT` (facoltativi) = titolare del trattamento e contatto mostrati nell'informativa privacy e nella pagina sui diritti dei canti. Sono pubblici. Se non sono impostati, il workflow usa i valori predefiniti scritti in `deploy-pages.yml` (Ambrogio Corti, con il suo indirizzo e-mail).
-  - `CUSTOM_DOMAIN` (facoltativo) = dominio personalizzato; il workflow compila per la radice del sito e aggiunge il file `CNAME`.
-- L'app è compilata con `BASE_PATH=/Jubilate/` (percorso base di Vite, del router e del manifest PWA). Il build copia `index.html` in `404.html` per le rotte della SPA e aggiunge `.nojekyll`.
+  - `CUSTOM_DOMAIN` (facoltativo) = dominio personalizzato, predefinito `jubilate-deo.it`; il workflow compila per la radice del sito e aggiunge il file `CNAME`.
+- Con il dominio personalizzato l'app è compilata per la radice (`BASE_PATH=/`); senza, con `BASE_PATH=/Jubilate/` (percorso base di Vite, del router e del manifest PWA). Il build copia `index.html` in `404.html` per le rotte della SPA e aggiunge `.nojekyll`.
 - GitHub Pages non permette intestazioni HTTP personalizzate: la Content-Security-Policy è inserita come `<meta>` in `index.html` (vedi SECURITY.md). `public/_headers` e `public/_redirects` restano per un eventuale hosting su Cloudflare Pages.
 - Se il progetto Supabase usa un dominio personalizzato, aggiungerlo alla CSP in `vite.config.ts`.
 
